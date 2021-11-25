@@ -1,7 +1,7 @@
 ## DX Core
 > Core version: `1.2.001`
 > 
-> Game: Geometry Dash (version 1.2)
+> Game: `Geometry Dash (version 1.2)`
 ---
 1. Modify your database connection details `config/database.php`
 ```php
