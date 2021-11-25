@@ -1,17 +1,25 @@
 ## DX Core
-> Core version: `1.2.001`
-> 
-> Game: Geometry Dash (version 1.2)
+
+Core version: `1.2.001`
+
+Supported version of Geometry Dash: 1.0 - 1.2
+
+Required version of PHP: 5.4+ (tested up to 7.4)
+
 ---
-1. Import `database.sql` to MySQL server
-2. Modify your database connection details `config/database.php`
+
+### Setup
+
+1. Upload the files on a webserver
+2. Import `database.sql` into a MySQL/MariaDB database
+3. Modify your database connection details in a `config/database.php`
 ```php
 $dbHost = '127.0.0.1';
 $dbUser = 'root';
 $dbPassword = '';
 $dbName = 'dxcore';
 ```
-3. Configure the core `config/settings.php`
+4. Configure the core in a `config/settings.php`
 ```php
 $checkGameVersion = true; // false - disable game version check; true - enable game version check
 $totalGameVersion = 3; // 3 - version 1.2
@@ -36,3 +44,7 @@ $likesLimiting = true; // false - disable likes limit; true - enable likes limit
 $likesLimitingCount = 20; // The number of likes for the limit
 $likesLimitingTime = 3600; // Time of counting likes for the limit (in seconds)
 ```
+
+### Credits
+
+Developer: [DeXotik](https://vk.com/dexotik)
