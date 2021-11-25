@@ -26,6 +26,8 @@
 
     if($_POST["secret"] === "Wmfd2893gb7"){
         $comment = str_replace(":", "-", $comment);
+        $comment = str_replace("~", "-", $comment);
+        $comment = str_replace("|", "-", $comment);
         $comment = base64_encode($comment);
 
         $userID = $f->getUserID($accountID, $userName);
