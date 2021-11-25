@@ -36,8 +36,6 @@
             $commentString .= "~4~".$comment["likes"]; // Likes on comment
             $commentString .= "~5~0"; // likes - count = likes on level
             $commentString .= "~6~".$comment["commentID"]; // commentID
-            // $commentString .= "~7~".$comment["spam"]; // Spam
-            $commentString .= "~7~1"; // Spam
             $commentString .= "|";
 
             $userString .= $comment['userID'].":".$f->getUserName($comment['userID'])."|";
