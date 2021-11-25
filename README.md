@@ -3,14 +3,15 @@
 > 
 > Game: Geometry Dash (version 1.2)
 ---
-1. Modify your database connection details `config/database.php`
+1. Import `database.sql` to MySQL server
+2. Modify your database connection details `config/database.php`
 ```php
 $dbHost = '127.0.0.1';
 $dbUser = 'root';
 $dbPassword = '';
 $dbName = 'dxcore';
 ```
-2. Configure the core `config/settings.php`
+3. Configure the core `config/settings.php`
 ```php
 $checkGameVersion = true; // false - disable game version check; true - enable game version check
 $totalGameVersion = 3; // 3 - version 1.2
