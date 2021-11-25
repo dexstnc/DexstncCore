@@ -1,10 +1,10 @@
 <?php
     chdir(dirname(__FILE__));
 
-    include "../incl/database.php";
-    require_once "../incl/functions.php";
+    include "../include/database.php";
+    require_once "../include/functions.php";
     $f = new Functions();
-    require_once "../incl/commands.php";
+    require_once "../include/commands.php";
     $c = new Commands();
     require_once "../config/settings.php";
 
