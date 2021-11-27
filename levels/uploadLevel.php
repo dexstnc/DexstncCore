@@ -13,17 +13,17 @@
 
     $ip = $f->getIP();
 
-    // Data - version 1.2
+    // Data - version 1.0
     $accountID = isset($_POST["udid"]) ? $f->checkString($_POST["udid"]) : "";
     $userName = isset($_POST["userName"]) ? $f->checkDefaultString($_POST["userName"]) : "";
-    // $levelID = isset($_POST["levelID"]) ? $f->checkNum($_POST["levelID"]) : 0;
+    // $levelID = isset($_POST["levelID"]) ? $f->checkNum($_POST["levelID"]) : ";
     $levelName = isset($_POST["levelName"]) ? $f->checkDefaultString($_POST["levelName"]) : "";
     $levelDesc = isset($_POST["levelDesc"]) ? $f->checkMultiString($_POST["levelDesc"]) : "";
     $levelString = isset($_POST["levelString"]) ? $f->checkMultiString($_POST["levelString"]) : "";
-    $levelVersion = isset($_POST["levelVersion"]) ? $f->checkNum($_POST["levelVersion"]) : 1;
-    $levelLength = isset($_POST["levelLength"]) ? $f->checkNum($_POST["levelLength"]) : 0;
-    $audioTrack = isset($_POST["audioTrack"]) ? $f->checkNum($_POST["audioTrack"]) : 0;
-    $gameVersion = isset($_POST["gameVersion"]) ? $f->checkNum($_POST["gameVersion"]) : 3;
+    $levelVersion = isset($_POST["levelVersion"]) ? $f->checkNum($_POST["levelVersion"]) : "";
+    $levelLength = isset($_POST["levelLength"]) ? $f->checkNum($_POST["levelLength"]) : "";
+    $audioTrack = isset($_POST["audioTrack"]) ? $f->checkNum($_POST["audioTrack"]) : "";
+    $gameVersion = isset($_POST["gameVersion"]) ? $f->checkNum($_POST["gameVersion"]) : "";
 
     // Check data
     if($accountID === "" OR is_numeric($accountID)) exit("-1");
@@ -44,10 +44,10 @@
         $userID = $f->getUserID($accountID, $userName);
 
         // Level limit
-        if($levelLimiting === true){
+        if($levelLimit === true){
             $query = $db->prepare("SELECT count(*) FROM levels WHERE (IP = :ip OR userID = :userID) AND uploadDate > :time");
-            $query->execute([':ip' => $ip, ':userID' => $userID, ':time' => time()-$levelLimitingTime]);
-            if($query->fetchColumn() >= $levelLimitingCount) exit("-1");
+            $query->execute([':ip' => $ip, ':userID' => $userID, ':time' => time()-$levelLimitTime]);
+            if($query->fetchColumn() >= $levelLimitCount) exit("-1");
         }
 
         $query = $db->prepare("SELECT levelID FROM levels WHERE levelName = :levelName AND userID = :userID LIMIT 1");
