@@ -7,18 +7,21 @@
 
     $f->checkBanIP();
 
-    // Data - version 1.2
+    // Data - version 1.0
     $type = isset($_POST["type"]) ? $f->checkNum($_POST["type"]) : 1;
     $search = isset($_POST["str"]) ? $f->checkDefaultString($_POST["str"]) : "";
     $difficulty = isset($_POST["diff"]) ? $f->checkNumString($_POST["diff"]) : "-";
     $length = isset($_POST["len"]) ? $f->checkNumString($_POST["len"]) : "-";
     $page = isset($_POST["page"]) ? $f->checkNum($_POST["page"]) : 0;
+    // Data - version 1.3
+    $star = isset($_POST["star"]) ? $f->checkNum($_POST["star"]) : 0;
 
     // Check data
     if($type === "") exit("-1");
     if($difficulty === "") exit("-1");
     if($length === "") exit("-1");
     if($page === "") exit("-1");
+    if($star === "") exit("-1");
 
     if($_POST["secret"] === "Wmfd2893gb7"){
         $offset = $page*10;
@@ -37,12 +40,18 @@
         if($difficulty !== "-"){
             if($difficulty == -1){
                 $where[] = "difficulty = 0";
+            } elseif($difficulty == -2){
+                $where[] = "difficulty = 5";
             } elseif(is_numeric($difficulty)){
                 $where[] = "difficulty = $difficulty";
             } else {
                 $difficulty = str_replace(",", "0,", $diff)."0";
                 $where[] = "difficulty IN ($difficulty)";
             }
+        }
+
+        if($star == 1){
+            $where[] = "stars > 0";
         }
 
         switch($type){
@@ -97,19 +106,24 @@
         $lvlString = "";
         $userString = "";
         foreach($levels AS $level){
-            $multiString[] = $level['levelID'];
+            $levelDesc = base64_decode($level['levelDesc']);
 
+            // Output - version 1.0
             $lvlString .= "1:".$level["levelID"]; // level ID
             $lvlString .= ":2:".$level["levelName"]; // level name
-            $lvlString .= ":3:".base64_decode($level['levelDesc']); // level description
+            $lvlString .= ":3:".$levelDesc; // level description
             $lvlString .= ":5:".$level["levelVersion"]; // level version
             $lvlString .= ":6:".$level["userID"]; // user ID
-            $lvlString .= ":8:10:9:".$f->getRealDifficulty($level["difficulty"]); // level difficulty
+            $lvlString .= ":8:10:9:".($level["difficulty"] * 10); // level difficulty
             $lvlString .= ":10:".$level["downloads"]; // downloads on level
             $lvlString .= ":12:".$level["audioTrack"]; // audiotrack on level
             $lvlString .= ":13:".$level["gameVersion"]; // game version
             $lvlString .= ":14:".$level["likes"]; // likes on level
             $lvlString .= ":15:".$level["levelLength"]; // level length
+            $lvlString .= ":16:0"; // likes - count = likes on level
+            // Output - version 1.3
+            $lvlString .= ":17:".$level["demon"]; // is demon
+            $lvlString .= ":18:".$level["stars"]; // stars
             $lvlString .= "|";
 
             $userString .= $level['userID'].":".$f->getUserName($level['userID'])."|";
