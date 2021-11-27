@@ -12,13 +12,13 @@
                     return "Like/Dislike on comment";
                     break;
                 case "4":
-                    return "Deleting level";
+                    return "Deleting a level";
                     break;
                 case "5":
-                    return "Rating level";
+                    return "!rate";
                     break;
                 case "6":
-                    return "Unrating level";
+                    return "!unrate";
                     break;
                 default:
                     return "Unknown action";
