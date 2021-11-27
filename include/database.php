@@ -1,6 +1,6 @@
 <?php
     chdir(dirname(__FILE__));
-	// error_reporting(0);
+	error_reporting(0);
 
 	include "../config/database.php";
 
