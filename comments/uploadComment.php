@@ -12,7 +12,7 @@
 
     $ip = $f->getIP();
 
-    // Data - version 1.2
+    // Data - version 1.0
     $accountID = isset($_POST["udid"]) ? $f->checkString($_POST["udid"]) : "";
     $userName = isset($_POST["userName"]) ? $f->checkDefaultString($_POST["userName"]) : "";
     $levelID = isset($_POST["levelID"]) ? $f->checkNum($_POST["levelID"]) : "";
@@ -36,15 +36,15 @@
         if($c->checkCommand($userID, $levelID, base64_decode($comment))) exit("-1");
         
         // Comment limit
-        if($commentLimiting === true){
+        if($commentLimit === true){
             $query = $db->prepare("SELECT count(*) FROM comments WHERE (IP = :ip OR userID = :userID) AND uploadDate > :time");
-            $query->execute([':ip' => $ip, ':userID' => $userID, ':time' => time()-$commentLimitingTime]);
-            if($query->fetchColumn() >= $commentLimitingCount) exit("-1");
+            $query->execute([':ip' => $ip, ':userID' => $userID, ':time' => time()-$commentLimitTime]);
+            if($query->fetchColumn() >= $commentLimitCount) exit("-1");
         }
-        if($commentLimitingAtLevel === true){
+        if($commentLimitAtLevel === true){
             $query = $db->prepare("SELECT count(*) FROM comments WHERE (IP = :ip OR userID = :userID) AND levelID = :levelID");
             $query->execute([':ip' => $ip, ':userID' => $userID, ':levelID' => $levelID]);
-            if($query->fetchColumn() >= $commentLimitingAtLevelCount) exit("-1");
+            if($query->fetchColumn() >= $commentLimitAtLevelCount) exit("-1");
         }
 
         $query = $db->prepare("INSERT INTO comments (levelID, comment, uploadDate, userID, IP) VALUES (:levelID, :comment, :time, :userID, :ip)");
