@@ -1,24 +1,51 @@
 <?php
     $checkGameVersion = true; // false - disable game version check; true - enable game version check
-    $totalGameVersion = 3; // 3 - version 1.2
+    $totalGameVersion = 4;
+    /* 
+    GAME VERSIONS
+        1 - version 1.0
+        2 - version 1.1
+        3 - version 1.2
+        4 - version 1.3
+    */
 
     $disabledNames = ["Player", "RobTop"]; // Disabled names
     $uniqueNames = true; // false - users can be with the same name; true - only unique names
-    $usersLimiting = true; // false - disable user limit; true - enable user limit
-    $usersLimitingCount = 3; // The number of users for the limit
-    $usersLimitingTime = 3600; // Time of counting users for the limit (in seconds)
+    $usersLimit = true; // false - disable user limit; true - enable user limit
+    $usersLimitCount = 3; // The number of users for the limit
+    $usersLimitTime = 3600; // Time of counting users for the limit (in seconds)
 
-    $levelLimiting = true; // false - disable level limit; true - enable level limit
-    $levelLimitingCount = 3; // The number of levels for the limit
-    $levelLimitingTime = 3600; // Time of counting levels for the limit (in seconds)
+    $levelLimit = true; // false - disable level limit; true - enable level limit
+    $levelLimitCount = 3; // The number of levels for the limit
+    $levelLimitTime = 3600; // Time of counting levels for the limit (in seconds)
 
-    $commentLimiting = true; // false - disable comment limit; true - enable comment limit
-    $commentLimitingCount = 10; // The number of comments for the limit
-    $commentLimitingTime = 3600; // Time of counting comments for the limit (in seconds)
-    $commentLimitingAtLevel = true; // false - disable comment limit at level; true - enable comment limit at level
-    $commentLimitingAtLevelCount = 3; // The number of comments per level for the limit
+    $commentLimit = true; // false - disable comment limit; true - enable comment limit
+    $commentLimitCount = 10; // The number of comments for the limit
+    $commentLimitTime = 3600; // Time of counting comments for the limit (in seconds)
+    $commentLimitAtLevel = true; // false - disable comment limit at level; true - enable comment limit at level
+    $commentLimitAtLevelCount = 3; // The number of comments per level for the limit
     
-    $likesLimiting = true; // false - disable likes limit; true - enable likes limit
-    $likesLimitingCount = 20; // The number of likes for the limit
-    $likesLimitingTime = 3600; // Time of counting likes for the limit (in seconds)
+    $likesLimit = true; // false - disable likes limit; true - enable likes limit
+    $likesLimitCount = 20; // The number of likes for the limit
+    $likesLimitTime = 3600; // Time of counting likes for the limit (in seconds)
+
+    $scoreCount = 50; // Number of positions in the scores
+
+    $scoreLimit = true; // false - disable score limit; true - enable score limit
+    $scoreLimitStars = 55 + 20; // Additional limit for stars
+    /* 
+    NUMBER OF STARS IN DIFFERENT VERSIONS
+        55 - version 1.3
+    */
+    $scoreLimitDemons = 0 + 3; // Additional limit for demons
+    /* 
+    NUMBER OF DEMONS IN DIFFERENT VERSIONS
+        0 - version 1.3
+    */
+
+    $commandRateLimit = true; // false - disable command rate limit; true - enable command rate limit
+    $commandRateLimitCheckStars = true; // false - disable checking stars for difficulty; true - enable checking stars for difficulty
+    $commandRateLimitStars = true; // false - disable checking minimum and maximum number of stars; true - enable checking minimum and maximum number of stars
+    $commandRateLimitMinStars = 1; // Minimum number of stars
+    $commandRateLimitMaxStars = 10; // Maximum number of stars
 ?>
