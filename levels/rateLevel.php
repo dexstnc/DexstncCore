@@ -7,7 +7,7 @@
 
     $f->checkBanIP();
 
-    // Data - version 1.2
+    // Data - version 1.0
     $levelID = isset($_POST["levelID"]) ? $f->checkNum($_POST["levelID"]) : "";
     $rating = isset($_POST["rating"]) ? $f->checkNum($_POST["rating"]) : "";
 
