@@ -63,10 +63,10 @@
             }
 
             // User limit
-            if($usersLimiting === true){
+            if($usersLimit === true){
                 $query = $db->prepare("SELECT count(*) FROM users WHERE IP = :ip AND lastActive > :time");
-                $query->execute([':ip' => $ip, ':time' => time()-$usersLimitingTime]);
-                if($query->fetchColumn() >= $usersLimitingCount) exit("-1");
+                $query->execute([':ip' => $ip, ':time' => time()-$usersLimitTime]);
+                if($query->fetchColumn() >= $usersLimitCount) exit("-1");
             }
 
             // Get userID
@@ -99,9 +99,6 @@
             if($query->rowCount() != 0){
                 return $query->fetchColumn();
             } else return "Unknown";
-        }
-        public function getRealDifficulty($difficulty){
-            return $difficulty*10;
         }
         public function checkPossibility($userID, $string){
             chdir(dirname(__FILE__));
