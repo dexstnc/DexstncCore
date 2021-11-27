@@ -9,7 +9,7 @@
 
     $ip = $f->getIP();
 
-    // Data - version 1.2
+    // Data - version 1.0
     $itemID = isset($_POST["itemID"]) ? $f->checkNum($_POST["itemID"]) : "";
     $like = isset($_POST["like"]) ? $f->checkNum($_POST["like"]) : "";
     $type = isset($_POST["type"]) ? $f->checkNum($_POST["type"]) : "";
@@ -21,10 +21,10 @@
 
     if($_POST["secret"] === "Wmfd2893gb7"){
         // Likes limit
-        if($likesLimiting){
+        if($likesLimit === true){
             $query = $db->prepare("SELECT count(*) FROM actions WHERE (type = 2 OR type = 3) AND IP = :ip AND actionDate > :time");
-            $query->execute([':ip' => $ip, ':time' => time()-$likesLimitingTime]);
-            if($query->fetchColumn() >= $likesLimitingCount) exit("-1");
+            $query->execute([':ip' => $ip, ':time' => time()-$likesLimitTime]);
+            if($query->fetchColumn() >= $likesLimitCount) exit("-1");
         }
 
         switch($type){
