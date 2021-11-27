@@ -41,7 +41,7 @@
             if($difficulty == -1){
                 $where[] = "difficulty = 0";
             } elseif($difficulty == -2){
-                $where[] = "difficulty = 5";
+                $where[] = "difficulty = 5 AND demon = 1";
             } elseif(is_numeric($difficulty)){
                 $where[] = "difficulty = $difficulty";
             } else {
