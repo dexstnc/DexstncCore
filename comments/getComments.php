@@ -9,7 +9,7 @@
 
     $ip = $f->getIP();
 
-    // Data - version 1.2
+    // Data - version 1.0
     $levelID = isset($_POST["levelID"]) ? $f->checkNum($_POST["levelID"]) : "";
     $page = isset($_POST["page"]) ? $f->checkNum($_POST["page"]) : 0;
 
@@ -30,11 +30,15 @@
         $query->execute([':levelID' => $levelID]);
         $comments = $query->fetchAll();
 
+        $commentString = "";
         foreach($comments AS $comment){
-            $commentString .= "2~".base64_decode($comment['comment']); // Comment
+            $commentText = base64_decode($comment['comment']);
+
+            // Output - version 1.0
+            $commentString .= "2~".$commentText; // Comment
             $commentString .= "~3~".$comment["userID"]; // userID
             $commentString .= "~4~".$comment["likes"]; // Likes on comment
-            $commentString .= "~5~0"; // likes - count = likes on level
+            $commentString .= "~5~0"; // likes - count = likes on comment
             $commentString .= "~6~".$comment["commentID"]; // commentID
             $commentString .= "|";
 
