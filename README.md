@@ -1,6 +1,6 @@
 ## DX Core
 
-Core version: `1.2.001`
+Core version: `1.3.001`
 
 Supported version of Geometry Dash: 1.0 - 1.3
 
