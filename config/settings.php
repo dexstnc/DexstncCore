@@ -35,6 +35,9 @@
     $scoreLimitStars = 55 + 20; // Additional limit for stars
     /* 
     NUMBER OF STARS IN DIFFERENT VERSIONS
+        28 - version 1.0
+        36 - version 1.1
+        45 - version 1.2
         55 - version 1.3
     */
     $scoreLimitDemons = 0 + 3; // Additional limit for demons
