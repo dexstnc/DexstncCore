@@ -1,8 +1,6 @@
 <?php
-    chdir(dirname(__FILE__));
-
-    include "../include/database.php";
-    require_once "../include/functions.php";
+    include dirname(__FILE__)."/../include/database.php";
+    require_once dirname(__FILE__)."/../include/functions.php";
     $f = new Functions();
 
     $f->checkBanIP();
