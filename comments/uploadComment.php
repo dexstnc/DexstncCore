@@ -1,12 +1,10 @@
 <?php
-    chdir(dirname(__FILE__));
-
-    include "../include/database.php";
-    require_once "../include/functions.php";
+    include dirname(__FILE__)."/../include/database.php";
+    include dirname(__FILE__)."/../config/settings.php";
+    require_once dirname(__FILE__)."/../include/functions.php";
     $f = new Functions();
-    require_once "../include/commands.php";
+    require_once dirname(__FILE__)."/../include/commands.php";
     $c = new Commands();
-    require_once "../config/settings.php";
 
     $f->checkBanIP();
 
