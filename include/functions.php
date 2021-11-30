@@ -40,8 +40,7 @@
             }
         }
         public function checkBanIP(){
-            chdir(dirname(__FILE__));
-            include "database.php";
+            include dirname(__FILE__)."/database.php";
 
             $ip = $this->getIP();
 
@@ -51,14 +50,15 @@
             if($query->fetchColumn() != 0) exit("-1");
         }
         public function getUserID($accountID, $userName = "Unknown"){
-            chdir(dirname(__FILE__));
-            include "database.php";
-            require "../config/settings.php";
+            include dirname(__FILE__)."/database.php";
+            include dirname(__FILE__)."/../config/settings.php";
 
+            $userName = trim($userName);
             $ip = $this->getIP();
 
             // Disabled names
             foreach($disabledNames AS $disabledName){
+                if($userName == "") exit("-1");
                 if(strtolower($userName) == strtolower(trim($disabledName))) exit("-1");
             }
 
@@ -91,8 +91,7 @@
             }
         }
         public function getUserName($userID){
-            chdir(dirname(__FILE__));
-            include "database.php";
+            include dirname(__FILE__)."/database.php";
 
             $query = $db->prepare("SELECT userName FROM users WHERE userID = :userID LIMIT 1");
             $query->execute([':userID' => $userID]);
@@ -101,8 +100,7 @@
             } else return "Unknown";
         }
         public function checkPossibility($userID, $string){
-            chdir(dirname(__FILE__));
-            include "database.php";
+            include dirname(__FILE__)."/database.php";
 
             $query = $db->prepare("SELECT roles.$string FROM roles INNER JOIN roleassign ON roles.roleID = roleassign.roleID WHERE roleassign.userID = :userID");
             $query->execute([':userID' => $userID]);
