@@ -1,8 +1,6 @@
 <?php
-    chdir(dirname(__FILE__));
-
-    include "../include/database.php";
-    require_once "../include/functions.php";
+    include dirname(__FILE__)."/../include/database.php";
+    require_once dirname(__FILE__)."/../include/functions.php";
     $f = new Functions();
 
     $f->checkBanIP();
@@ -10,9 +8,9 @@
     // Data - version 1.0
     $type = isset($_POST["type"]) ? $f->checkNum($_POST["type"]) : 1;
     $search = isset($_POST["str"]) ? $f->checkDefaultString($_POST["str"]) : "";
-    $difficulty = isset($_POST["diff"]) ? $f->checkNumString($_POST["diff"]) : "-";
-    $length = isset($_POST["len"]) ? $f->checkNumString($_POST["len"]) : "-";
-    $page = isset($_POST["page"]) ? $f->checkNum($_POST["page"]) : 0;
+    $difficulty = isset($_POST["diff"]) ? $f->checkNumString($_POST["diff"]) : "";
+    $length = isset($_POST["len"]) ? $f->checkNumString($_POST["len"]) : "";
+    $page = isset($_POST["page"]) ? $f->checkNum($_POST["page"]) : "";
     // Data - version 1.3
     $star = isset($_POST["star"]) ? $f->checkNum($_POST["star"]) : 0;
 
