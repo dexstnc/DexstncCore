@@ -1,8 +1,7 @@
 <?php
-    chdir(dirname(__FILE__));
 	error_reporting(0);
 
-	include "../config/database.php";
+	include dirname(__FILE__)."/../config/database.php";
 
 	try {
 		$db = new PDO("mysql:host={$dbHost};dbname={$dbName};", $dbUser, $dbPassword, array(PDO::ATTR_PERSISTENT => true));
