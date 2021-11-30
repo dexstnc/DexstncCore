@@ -1,8 +1,6 @@
 <?php
-    chdir(dirname(__FILE__));
-
-    include "../include/database.php";
-    require_once "../include/functions.php";
+    include dirname(__FILE__)."/../include/database.php";
+    require_once dirname(__FILE__)."/../include/functions.php";
     $f = new Functions();
     
     $f->checkBanIP();
@@ -11,7 +9,7 @@
 
     // Data - version 1.0
     $levelID = isset($_POST["levelID"]) ? $f->checkNum($_POST["levelID"]) : "";
-    $page = isset($_POST["page"]) ? $f->checkNum($_POST["page"]) : 0;
+    $page = isset($_POST["page"]) ? $f->checkNum($_POST["page"]) : "";
 
     // Check data
     if($levelID === "") exit("-1");
