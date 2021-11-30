@@ -1,13 +1,12 @@
 <?php
-    chdir(dirname(__FILE__));
     ini_set("memory_limit", "64M");
     ini_set("post_max_size", "1M");
     ini_set("upload_max_filesize", "1M");
 
-    include "../include/database.php";
-    require_once "../include/functions.php";
+    include dirname(__FILE__)."/../include/database.php";
+    include dirname(__FILE__)."/../config/settings.php";
+    require_once dirname(__FILE__)."/../include/functions.php";
     $f = new Functions();
-    require_once "../config/settings.php";
 
     $f->checkBanIP();
 
