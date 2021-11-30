@@ -1,9 +1,8 @@
 <?php
     class Commands{
         public function checkCommand($userID, $levelID, $comment){
-            chdir(dirname(__FILE__));
-            include "database.php";
-            require_once "functions.php";
+            include dirname(__FILE__)."/database.php";
+            require_once dirname(__FILE__)."/functions.php";
             $f = new Functions();
 
             $ip = $f->getIP();
@@ -28,7 +27,7 @@
                     break;
                 case "!rate":
                     if($f->checkPossibility($userID, "commandRate")){
-                        require "../config/settings.php";
+                        include dirname(__FILE__)."/../config/settings.php";
 
                         if(!empty($commentArray[2]) AND is_numeric($commentArray[2])){
                             $stars = $commentArray[2];
@@ -86,15 +85,25 @@
                         $query = $db->prepare("INSERT INTO actions (type, value1, value2, value3, IP, actionDate) VALUES (5, :levelID, :difficulty, :stars, :ip, :time)");
                         $query->execute([':levelID' => $levelID, ':difficulty' => $difficulty, ':stars' => $stars, ':ip' => $ip, ':time' => time()]);
 
+                        if($commandRateAutoCPs === true){
+                            include dirname(__FILE__)."/../cron/include/withoutEcho/autoCreatorPoints.php";
+                        }
+
                         return true;
                     }
                     break;
                 case "!unrate":
                     if($f->checkPossibility($userID, "commandRate")){
+                        include dirname(__FILE__)."/../config/settings.php";
+
                         $query = $db->prepare("UPDATE levels SET difficulty = 0, rated = 0, rateDate = 0 WHERE levelID = :levelID AND deleted = 0");
                         $query->execute([':levelID' => $levelID]);
                         $query = $db->prepare("INSERT INTO actions (type, value1, IP, actionDate) VALUES (6, :levelID, :ip, :time)");
                         $query->execute([':levelID' => $levelID, ':ip' => $ip, ':time' => time()]);
+
+                        if($commandRateAutoCPs === true){
+                            include dirname(__FILE__)."/../cron/include/withoutEcho/autoCreatorPoints.php";
+                        }
 
                         return true;
                     }
