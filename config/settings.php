@@ -30,12 +30,11 @@
     $likesLimitTime = 3600; // Time of counting likes for the limit (in seconds)
 
     $scoreCount = 50; // Number of positions in the scores
-
     $scoreLimit = true; // false - disable score limit; true - enable score limit
     $scoreLimitStars = 55 + 20; // Additional limit for stars
     /* 
     NUMBER OF STARS IN DIFFERENT VERSIONS
-        28 - version 1.0
+	28 - version 1.0
         36 - version 1.1
         45 - version 1.2
         55 - version 1.3
@@ -46,9 +45,12 @@
         0 - version 1.3
     */
 
+    $ratedCPs = 1; // The number of creator points for rating the level
+
     $commandRateLimit = true; // false - disable command rate limit; true - enable command rate limit
     $commandRateLimitCheckStars = true; // false - disable checking stars for difficulty; true - enable checking stars for difficulty
     $commandRateLimitStars = true; // false - disable checking minimum and maximum number of stars; true - enable checking minimum and maximum number of stars
     $commandRateLimitMinStars = 1; // Minimum number of stars
     $commandRateLimitMaxStars = 10; // Maximum number of stars
+    $commandRateAutoCPs = true; // false - disable automatic delivery of creator points when using the command; true - enable automatic delivery of creator points when using the command
 ?>
