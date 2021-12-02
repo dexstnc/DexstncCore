@@ -29,7 +29,7 @@
     if($userName === "") exit("-1");
     // if($levelID === "") exit("-1");
     if($levelName === "") exit("-1");
-    if($levelString === "") exit("-1");
+    if($levelString === "" OR mb_strpos($levelString, "kS1,") !== 0 OR $levelString[mb_strlen($levelString) - 1] !== ";") exit("-1");
     if($levelVersion === "") exit("-1");
     if($levelLength === "") exit("-1");
     if($audioTrack === "") exit("-1");
