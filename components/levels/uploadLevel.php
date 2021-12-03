@@ -59,11 +59,11 @@
             $query = $db->prepare("INSERT INTO levels (levelName, levelDesc, levelVersion, levelLength, audioTrack, gameVersion, uploadDate, userID) VALUES (:levelName, :levelDesc, :levelVersion, :levelLength, :audioTrack, :gameVersion, :uploadDate, :userID)");
             $query->execute([':levelName' => $levelName, ':levelDesc' => $levelDesc, ':levelVersion' => $levelVersion, ':levelLength' => $levelLength, ':audioTrack' => $audioTrack, ':gameVersion' => $gameVersion, ':uploadDate' => time(), ':userID' => $userID]);
             $levelID = $db->lastInsertId();
-            file_put_contents(dirname(__FILE__)."/../../data/levels/$levelID");
+            file_put_contents(dirname(__FILE__)."/../../data/levels/$levelID", $levelString);
         } else {
             $query = $db->prepare("UPDATE levels SET levelDesc = :levelDesc, levelVersion = :levelVersion, levelLength = :levelLength, audioTrack = :audioTrack, gameVersion = :gameVersion, updateDate = :updateDate, deleted = 0 WHERE levelName = :levelName AND userID = :userID");
             $query->execute([':levelDesc' => $levelDesc, ':levelVersion' => $levelVersion, ':levelLength' => $levelLength, ':audioTrack' => $audioTrack, ':gameVersion' => $gameVersion, ':updateDate' => time(), ':levelName' => $levelName, ':userID' => $userID]);
-            file_put_contents(dirname(__FILE__)."/../../data/levels/$levelID");
+            file_put_contents(dirname(__FILE__)."/../../data/levels/$levelID", $levelString);
         }
 
         exit("$levelID");
