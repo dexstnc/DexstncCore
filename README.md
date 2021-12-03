@@ -38,12 +38,15 @@ Required version of PHP: 5.4+ (tested up to 7.4)
 ---
 
 ### Commands in comments
-* !rate \<difficulty\> \<stars\>
+* !rate \<difficulty\> \<stars\> - rate level
   * `Example 1:` !rate easy
   * `Example 2:` !rate hard 5
-* !unrate
-* !delete
-* !setacc \<userName\>
+* !unrate - unrate level
+* !suggest \<difficulty\> \<stars\> - send level for rating
+  * `Example 1:` !suggest easy
+  * `Example 2:` !suggest hard 5
+* !delete - delete level
+* !setacc \<userName\> - transfer level to another account
   * `Example:` !setacc DeXotik
 
 ---
