@@ -20,7 +20,6 @@
         $query->execute([':levelID' => $levelID]);
         if($query->rowCount() != 0){
             $level = $query->fetch();
-            if(!file_exists(dirname(__FILE__)."/data/$levelID")) exit("-1");
 
             $query = $db->prepare("SELECT count(*) FROM actions WHERE type = 1 AND value1 = :levelID AND IP = :ip");
             $query->execute([':levelID' => $levelID, ':ip' => $ip]);
