@@ -15,8 +15,10 @@ CREATE TABLE `actions` (
   `value1` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `value2` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `value3` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `actionDate` int NOT NULL,
-  `IP` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1'
+  `value4` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `userID` int NOT NULL DEFAULT '0',
+  `IP` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1',
+  `actionDate` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `bans`;
@@ -76,7 +78,20 @@ CREATE TABLE `roles` (
   `roleName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `commandDelete` int NOT NULL DEFAULT '0',
   `commandRate` int NOT NULL DEFAULT '0',
+  `commandSuggets` int NOT NULL DEFAULT '0',
   `commandSetacc` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `suggests`;
+CREATE TABLE `suggests` (
+  `suggestID` int NOT NULL,
+  `levelID` int NOT NULL,
+  `difficulty` int NOT NULL DEFAULT '0',
+  `demon` int NOT NULL DEFAULT '0',
+  `stars` int NOT NULL DEFAULT '0',
+  `suggestDate` int NOT NULL,
+  `userID` int NOT NULL,
+  `IP` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `users`;
@@ -114,6 +129,9 @@ ALTER TABLE `roleassign`
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`roleID`);
 
+ALTER TABLE `suggests`
+  ADD PRIMARY KEY (`suggestID`);
+
 ALTER TABLE `users`
   ADD PRIMARY KEY (`userID`);
 
@@ -135,6 +153,9 @@ ALTER TABLE `roleassign`
 
 ALTER TABLE `roles`
   MODIFY `roleID` int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `suggests`
+  MODIFY `suggestID` int NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `users`
   MODIFY `userID` int NOT NULL AUTO_INCREMENT;
