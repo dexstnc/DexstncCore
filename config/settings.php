@@ -1,5 +1,5 @@
 <?php
-    $checkGameVersion = true; // false - disable game version check; true - enable game version check
+    $checkGameVersion = false; // false - disable game version check; true - enable game version check
     $totalGameVersion = 4;
     /* 
     GAME VERSIONS
