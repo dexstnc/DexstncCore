@@ -1,3 +1,3 @@
 <?php
-    include "comments/uploadComment.php";
+    include "components/comments/uploadComment.php";
 ?>

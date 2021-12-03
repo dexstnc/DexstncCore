@@ -1,3 +1,3 @@
 <?php
-    include "misc/likeItem.php";
+    include "components/misc/likeItem.php";
 ?>

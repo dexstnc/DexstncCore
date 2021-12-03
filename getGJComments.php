@@ -1,3 +1,3 @@
 <?php
-    include "comments/getComments.php";
+    include "components/comments/getComments.php";
 ?>

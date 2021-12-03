@@ -1,5 +1,5 @@
 <?php
-    include dirname(__FILE__)."/../../include/database.php";
+    include dirname(__FILE__)."/../../components/include/database.php";
 
     echo "Fix Rated Levels:<br>";
 

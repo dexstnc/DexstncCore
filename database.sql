@@ -75,7 +75,8 @@ CREATE TABLE `roles` (
   `roleID` int NOT NULL,
   `roleName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `commandDelete` int NOT NULL DEFAULT '0',
-  `commandRate` int NOT NULL DEFAULT '0'
+  `commandRate` int NOT NULL DEFAULT '0',
+  `commandSetacc` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `users`;

@@ -1,3 +1,3 @@
 <?php
-    include "levels/rateLevel.php";
+    include "components/levels/rateLevel.php";
 ?>

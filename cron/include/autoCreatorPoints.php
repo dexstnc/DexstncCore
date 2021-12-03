@@ -1,5 +1,5 @@
 <?php
-    include dirname(__FILE__)."/../../include/database.php";
+    include dirname(__FILE__)."/../../components/include/database.php";
     include dirname(__FILE__)."/../../config/settings.php";
 
     echo "Auto Creator Points:<br>";

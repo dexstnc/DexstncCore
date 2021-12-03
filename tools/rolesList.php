@@ -1,5 +1,5 @@
 <?php
-    include "../include/database.php";
+    include "../components/include/database.php";
 
     $query = $db->prepare("SELECT roleID, roleName FROM roles ORDER BY roleID ASC");
     $query->execute();
@@ -26,7 +26,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Roles List</title>
     <style>
         *{
             margin: 0;

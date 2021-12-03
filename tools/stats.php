@@ -1,6 +1,6 @@
 <?php
     function getStats($select, $table, $where1 = "", $where2 = "", $where3 = ""){
-        include "../include/database.php";
+        include "../components/include/database.php";
 
         $query = $db->prepare("SELECT $select FROM $table $where1 $where2 $where3");
         $query->execute();

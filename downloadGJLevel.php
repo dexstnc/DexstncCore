@@ -1,3 +1,3 @@
 <?php
-    include "levels/downloadLevel.php";
+    include "components/levels/downloadLevel.php";
 ?>

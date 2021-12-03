@@ -1,3 +1,3 @@
 <?php
-    include "scores/updateScore.php";
+    include "components/scores/updateScore.php";
 ?>

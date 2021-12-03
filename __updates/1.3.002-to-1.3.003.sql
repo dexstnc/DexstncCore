@@ -1,0 +1,1 @@
+ALTER TABLE `roles` ADD `commandSetacc` INT(1) NOT NULL DEFAULT '0' AFTER `commandRate`;

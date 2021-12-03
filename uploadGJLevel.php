@@ -1,3 +1,3 @@
 <?php
-    include "levels/uploadLevel.php";
+    include "components/levels/uploadLevel.php";
 ?>

@@ -1,5 +1,5 @@
 <?php
-    include dirname(__FILE__)."/../../../include/database.php";
+    include dirname(__FILE__)."/../../../components/include/database.php";
 
     $query = $db->prepare("UPDATE levels SET rated = 0 WHERE stars = 0 AND rated = 1");
     $query->execute();
