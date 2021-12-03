@@ -12,13 +12,19 @@
                     return "Like/Dislike on comment";
                     break;
                 case "4":
-                    return "Deleting a level";
+                    return "!delete";
                     break;
                 case "5":
                     return "!rate";
                     break;
                 case "6":
                     return "!unrate";
+                    break;
+                case "7":
+                    return "!suggest";
+                    break;
+                case "8":
+                    return "!setacc";
                     break;
                 default:
                     return "Unknown action";
