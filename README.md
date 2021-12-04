@@ -1,8 +1,8 @@
 ## DX Core
 
-Core version: `1.3.005`
+Core version: `1.6.001`
 
-Supported version of Geometry Dash: 1.0 - 1.3
+Supported version of Geometry Dash: 1.0 - 1.6
 
 Required version of PHP: 5.4+ (tested up to 7.4)
 
@@ -38,13 +38,16 @@ Required version of PHP: 5.4+ (tested up to 7.4)
 ---
 
 ### Commands in comments
-* !rate \<difficulty\> \<stars\> - rate level
+* !rate \<difficulty\> \<stars\> \<featured\> - rate level
   * `Example 1:` !rate easy
   * `Example 2:` !rate hard 5
+  * `Example 3:` !rate demon 10 1
 * !unrate - unrate level
 * !suggest \<difficulty\> \<stars\> - send level for rating
   * `Example 1:` !suggest easy
   * `Example 2:` !suggest hard 5
+  * `Example 3:` !rate demon 10 1
+* !featured - toggle featured on level
 * !delete - delete level
 * !setacc \<userName\> - transfer level to another account
   * `Example:` !setacc DeXotik
