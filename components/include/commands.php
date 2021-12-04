@@ -28,8 +28,12 @@
                 break;
                 case "!rate":
                     if($f->checkPossibility($userID, "commandRate")){
-                        $demon = 0;
+                        $auto = 0; $demon = 0;
                         switch($commentArray[1]){
+                            case "auto":
+                                $difficulty = 5;
+                                $auto = 1;
+                                break;
                             case "easy":
                                 $difficulty = 1;
                                 break;
@@ -52,16 +56,18 @@
                             default: return false;
                         }
 
-                        $stars = 0; $rated = 0; $rateDate = 0;
+                        $stars = 0; $rated = 0; $featured = 0; $rateDate = 0;
                         if(!empty($commentArray[2]) AND is_numeric($commentArray[2])){
                             $stars = $commentArray[2];
                             $rated = 1;
                             $rateDate = time();
                         }
+                        if(!empty($commentArray[3]) AND ($commentArray[3] == 0 OR $commentArray[3] == 1)) $featured = $commentArray[3];
 
                         // Command rate limit
-                        if($commandRateLimit === true){
-                            if($commandRateLimitCheckStars AND $stars > 0){
+                        if($commandRateLimit === true AND $stars > 0){
+                            if($commandRateLimitCheckStars){
+                                if($commentArray[1] == "auto" AND $stars != 1) return false;
                                 if($commentArray[1] == "easy" AND $stars != 2) return false;
                                 if($commentArray[1] == "normal" AND $stars != 3) return false;
                                 if($commentArray[1] == "hard" AND ($stars != 4 OR $stars != 5)) return false;
@@ -77,10 +83,10 @@
                             }
                         }
 
-                        $query = $db->prepare("UPDATE levels SET difficulty = :difficulty, demon = :demon, stars = :stars, rated = :rated, rateDate = :rateDate WHERE levelID = :levelID AND deleted = 0");
-                        $query->execute([':difficulty' => $difficulty, ':demon' => $demon, ':stars' => $stars, ':rated' => $rated, ':rateDate' => $rateDate, ':levelID' => $levelID]);
-                        $query = $db->prepare("INSERT INTO actions (type, value1, value2, value3, value4, userID, IP, actionDate) VALUES (5, :levelID, :difficulty, :demon, :stars, :userID, :ip, :time)");
-                        $query->execute([':levelID' => $levelID, ':difficulty' => $difficulty, ':demon' => $demon, ':stars' => $stars, ':userID' => $userID, ':ip' => $ip, ':time' => time()]);
+                        $query = $db->prepare("UPDATE levels SET difficulty = :difficulty, demon = :demon, auto = :auto, stars = :stars, rated = :rated, featured = :featured, rateDate = :rateDate WHERE levelID = :levelID AND deleted = 0");
+                        $query->execute([':difficulty' => $difficulty, ':demon' => $demon, ':auto' => $auto, ':stars' => $stars, ':rated' => $rated, ':featured' => $featured, ':rateDate' => $rateDate, ':levelID' => $levelID]);
+                        $query = $db->prepare("INSERT INTO actions (type, value1, value2, value3, value4, userID, IP, actionDate) VALUES (5, :levelID, :difficulty, :stars, :featured, :userID, :ip, :time)");
+                        $query->execute([':levelID' => $levelID, ':difficulty' => $difficulty, ':stars' => $stars, ':featured' => $featured, ':userID' => $userID, ':ip' => $ip, ':time' => time()]);
 
                         if($commandRateAutoCPs === true){
                             include dirname(__FILE__)."/../../cron/include/withoutEcho/autoCreatorPoints.php";
@@ -93,7 +99,7 @@
                     if($f->checkPossibility($userID, "commandRate")){
                         include dirname(__FILE__)."/../../config/settings.php";
 
-                        $query = $db->prepare("UPDATE levels SET difficulty = 0, rated = 0, rateDate = 0 WHERE levelID = :levelID AND deleted = 0");
+                        $query = $db->prepare("UPDATE levels SET difficulty = 0, demon = 0, auto = 0, rated = 0, featured = 0, rateDate = 0 WHERE levelID = :levelID AND deleted = 0");
                         $query->execute([':levelID' => $levelID]);
                         $query = $db->prepare("INSERT INTO actions (type, value1, userID, IP, actionDate) VALUES (6, :levelID, :userID, :ip, :time)");
                         $query->execute([':levelID' => $levelID, ':userID' => $userID, ':ip' => $ip, ':time' => time()]);
@@ -106,9 +112,13 @@
                     }
                 break;
                 case "!suggest":
-                    if($f->checkPossibility($userID, "commandSuggets")){
-                        $demon = 0;
+                    if($f->checkPossibility($userID, "commandSuggest")){
+                        $auto = 0; $demon = 0;
                         switch($commentArray[1]){
+                            case "auto":
+                                $difficulty = 5;
+                                $auto = 1;
+                                break;
                             case "easy":
                                 $difficulty = 1;
                                 break;
@@ -134,10 +144,14 @@
                         if(!empty($commentArray[2]) AND is_numeric($commentArray[2])){
                             $stars = $commentArray[2];
                         } else $stars = 0;
+                        if(!empty($commentArray[3]) AND ($commentArray[3] == 0 OR $commentArray[3] == 1)){
+                            $featured = $commentArray[3];
+                        } else $featured = 0;
 
                         // Command rate limit
-                        if($commandRateLimit === true){
-                            if($commandRateLimitCheckStars AND $stars > 0){
+                        if($commandRateLimit === true AND $stars > 0){
+                            if($commandRateLimitCheckStars){
+                                if($commentArray[1] == "auto" AND $stars != 1) return false;
                                 if($commentArray[1] == "easy" AND $stars != 2) return false;
                                 if($commentArray[1] == "normal" AND $stars != 3) return false;
                                 if($commentArray[1] == "hard" AND ($stars != 4 OR $stars != 5)) return false;
@@ -158,17 +172,36 @@
                         if($query->rowCount() == 1){
                             if($query->fetchColumn() > (time() - 300)) return false;
 
-                            $query = $db->prepare("UPDATE suggests SET difficulty = :difficulty, demon = :demon, stars = :stars, suggestDate = :suggestDate, IP = :ip WHERE levelID = :levelID AND userID = :userID");
-                            $query->execute([':difficulty' => $difficulty, ':demon' => $demon, ':stars' => $stars, ':suggestDate' => time(), ':ip' => $ip, ':levelID' => $levelID, ':userID' => $userID]);
+                            $query = $db->prepare("UPDATE suggests SET difficulty = :difficulty, demon = :demon, auto = :auto, stars = :stars, featured = :featured, suggestDate = :suggestDate, IP = :ip WHERE levelID = :levelID AND userID = :userID");
+                            $query->execute([':difficulty' => $difficulty, ':demon' => $demon, ':auto' => $auto, ':stars' => $stars, ':featured' => $featured, ':suggestDate' => time(), ':ip' => $ip, ':levelID' => $levelID, ':userID' => $userID]);
                         } else {
-                            $query = $db->prepare("INSERT INTO suggests (levelID, difficulty, demon, stars, suggestDate, userID, IP) VALUES (:levelID, :difficulty, :demon, :stars, :suggestDate, :userID, :ip)");
-                            $query->execute([':levelID' => $levelID, ':difficulty' => $difficulty, ':demon' => $demon, ':stars' => $stars, ':suggestDate' => time(), ':userID' => $userID, ':ip' => $ip]);
+                            $query = $db->prepare("INSERT INTO suggests (levelID, difficulty, demon, auto, stars, featured, suggestDate, userID, IP) VALUES (:levelID, :difficulty, :demon, :auto, :stars, :featured, :suggestDate, :userID, :ip)");
+                            $query->execute([':levelID' => $levelID, ':difficulty' => $difficulty, ':demon' => $demon, ':auto' => $auto, ':stars' => $stars, ':featured' => $featured, ':suggestDate' => time(), ':userID' => $userID, ':ip' => $ip]);
                         }
 
-                        $query = $db->prepare("INSERT INTO actions (type, value1, value2, value3, value4, userID, IP, actionDate) VALUES (7, :levelID, :difficulty, :demon, :stars, :userID, :ip, :time)");
-                        $query->execute([':levelID' => $levelID, ':difficulty' => $difficulty, ':demon' => $demon, ':stars' => $stars, ':userID' => $userID, ':ip' => $ip, ':time' => time()]);
+                        $query = $db->prepare("INSERT INTO actions (type, value1, value2, value3, value4, userID, IP, actionDate) VALUES (7, :levelID, :difficulty, :stars, :featured, :userID, :ip, :time)");
+                        $query->execute([':levelID' => $levelID, ':difficulty' => $difficulty, ':stars' => $stars, ':featured' => $featured, ':userID' => $userID, ':ip' => $ip, ':time' => time()]);
 
                         return true;
+                    }
+                break;
+                case "!featured":
+                    if($f->checkPossibility($userID, "commandFeatured")){
+                        $query = $db->prepare("SELECT featured FROM levels WHERE levelID = :levelID LIMIT 1");
+                        $query->execute([':levelID' => $levelID]);
+                        if($query->rowCount() == 1){
+                            $featured = $query->fetchColumn();
+                            if($featured == 0){
+                                $featured = 1;
+                            } else $featured = 0;
+
+                            $query = $db->prepare("UPDATE levels SET featured = :featured WHERE levelID = :levelID");
+                            $query->execute([':featured' => $featured, ':levelID' => $levelID]);
+                            $query = $db->prepare("INSERT INTO actions (type, value1, value2, userID, IP, actionDate) VALUES (9, :levelID, :featured, :userID, :ip, :time)");
+                            $query->execute([':levelID' => $levelID, ':featured' => $featured, ':userID' => $userID, ':ip' => $ip, ':time' => time()]);
+
+                            return true;
+                        } else return false;
                     }
                 break;
                 case "!setacc":

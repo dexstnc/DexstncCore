@@ -23,6 +23,9 @@
     $levelLength = isset($_POST["levelLength"]) ? $f->checkNum($_POST["levelLength"]) : "";
     $audioTrack = isset($_POST["audioTrack"]) ? $f->checkNum($_POST["audioTrack"]) : "";
     $gameVersion = isset($_POST["gameVersion"]) ? $f->checkNum($_POST["gameVersion"]) : "";
+    // Data - version 1.6
+    // $auto = isset($_POST["auto"]) ? $f->checkNum($_POST["auto"]) : 0;
+    // $levelReplay = isset($_POST["levelReplay"]) ? $f->checkMultiString($_POST["levelReplay"]) : "";
 
     // Check data
     if($accountID === "" OR is_numeric($accountID)) exit("-1");
@@ -34,6 +37,7 @@
     if($levelLength === "") exit("-1");
     if($audioTrack === "") exit("-1");
     if($gameVersion === "") exit("-1");
+    // if($auto === "") exit("-1");
 
     if($_POST["secret"] === "Wmfd2893gb7"){
         if($checkGameVersion AND $gameVersion != $totalGameVersion) exit("-1");
@@ -66,6 +70,6 @@
             file_put_contents(dirname(__FILE__)."/../../data/levels/$levelID", $levelString);
         }
 
-        exit("$levelID");
+        echo $levelID;
     } else exit("-1");
 ?>

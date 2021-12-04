@@ -1,6 +1,4 @@
 <?php
-	error_reporting(0);
-
 	include dirname(__FILE__)."/../../config/database.php";
 
 	try {

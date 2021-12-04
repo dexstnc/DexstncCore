@@ -7,13 +7,16 @@
 
     $ip = $f->getIP();
 
-    // Data - version 1.0
+    // Data - version 1.2
     $levelID = isset($_POST["levelID"]) ? $f->checkNum($_POST["levelID"]) : "";
     $page = isset($_POST["page"]) ? $f->checkNum($_POST["page"]) : "";
+    // Data - version 1.6
+    // $userID = isset($_POST["userID"]) ? $f->checkNum($_POST["userID"]) : 0;
 
     // Check data
     if($levelID === "") exit("-1");
     if($page === "") exit("-1");
+    // if($userID === "") exit("-1");
 
     if($_POST["secret"] === "Wmfd2893gb7"){
         $offset = $page*10;
@@ -32,12 +35,14 @@
         foreach($comments AS $comment){
             $commentText = base64_decode($comment['comment']);
 
-            // Output - version 1.0
+            // Output - version 1.2
             $commentString .= "2~".$commentText; // Comment
             $commentString .= "~3~".$comment["userID"]; // userID
             $commentString .= "~4~".$comment["likes"]; // Likes on comment
             $commentString .= "~5~0"; // likes - count = likes on comment
             $commentString .= "~6~".$comment["commentID"]; // commentID
+            // Output - version 1.6
+            $commentString .= "~7~".$comment["spam"]; // is spam
             $commentString .= "|";
 
             $userString .= $comment['userID'].":".$f->getUserName($comment['userID'])."|";

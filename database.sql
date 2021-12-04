@@ -14,8 +14,8 @@ CREATE TABLE `actions` (
   `type` int NOT NULL,
   `value1` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `value2` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value3` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value4` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `value3` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `value4` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `userID` int NOT NULL DEFAULT '0',
   `IP` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1',
   `actionDate` int NOT NULL
@@ -51,8 +51,10 @@ CREATE TABLE `levels` (
   `likes` int NOT NULL DEFAULT '0',
   `difficulty` int NOT NULL DEFAULT '0',
   `demon` int NOT NULL DEFAULT '0',
+  `auto` int NOT NULL DEFAULT '0',
   `stars` int NOT NULL DEFAULT '0',
   `rated` int NOT NULL DEFAULT '0',
+  `featured` int NOT NULL DEFAULT '0',
   `levelVersion` int NOT NULL DEFAULT '1',
   `levelLength` int NOT NULL DEFAULT '0',
   `audioTrack` int NOT NULL DEFAULT '0',
@@ -63,6 +65,19 @@ CREATE TABLE `levels` (
   `userID` int NOT NULL,
   `IP` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1',
   `deleted` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `mappacks`;
+CREATE TABLE `mappacks` (
+  `mapPackID` int NOT NULL,
+  `mapPackName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mapPackNameColor` varchar(11) COLLATE utf8_unicode_ci NOT NULL DEFAULT '000,000,000',
+  `level1` int NOT NULL DEFAULT '0',
+  `level2` int NOT NULL DEFAULT '0',
+  `level3` int NOT NULL DEFAULT '0',
+  `difficulty` int NOT NULL DEFAULT '0',
+  `stars` int NOT NULL DEFAULT '0',
+  `coins` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `roleassign`;
@@ -78,7 +93,8 @@ CREATE TABLE `roles` (
   `roleName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `commandDelete` int NOT NULL DEFAULT '0',
   `commandRate` int NOT NULL DEFAULT '0',
-  `commandSuggets` int NOT NULL DEFAULT '0',
+  `commandFeatured` int NOT NULL DEFAULT '0',
+  `commandSuggest` int NOT NULL DEFAULT '0',
   `commandSetacc` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -88,10 +104,12 @@ CREATE TABLE `suggests` (
   `levelID` int NOT NULL,
   `difficulty` int NOT NULL DEFAULT '0',
   `demon` int NOT NULL DEFAULT '0',
+  `auto` int NOT NULL DEFAULT '0',
   `stars` int NOT NULL DEFAULT '0',
+  `featured` int NOT NULL DEFAULT '0',
   `suggestDate` int NOT NULL,
   `userID` int NOT NULL,
-  `IP` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1'
+  `IP` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `users`;
@@ -101,7 +119,9 @@ CREATE TABLE `users` (
   `userName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Unknown',
   `stars` int NOT NULL DEFAULT '0',
   `demons` int NOT NULL DEFAULT '0',
+  `coins` int NOT NULL DEFAULT '0',
   `creatorPoints` int NOT NULL DEFAULT '0',
+  `iconType` int NOT NULL DEFAULT '0',
   `icon` int NOT NULL DEFAULT '0',
   `color1` int NOT NULL DEFAULT '0',
   `color2` int NOT NULL DEFAULT '0',
@@ -122,6 +142,9 @@ ALTER TABLE `comments`
 
 ALTER TABLE `levels`
   ADD PRIMARY KEY (`levelID`);
+
+ALTER TABLE `mappacks`
+  ADD PRIMARY KEY (`mapPackID`);
 
 ALTER TABLE `roleassign`
   ADD PRIMARY KEY (`roleassignID`);
@@ -147,6 +170,9 @@ ALTER TABLE `comments`
 
 ALTER TABLE `levels`
   MODIFY `levelID` int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `mappacks`
+  MODIFY `mapPackID` int NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `roleassign`
   MODIFY `roleassignID` int NOT NULL AUTO_INCREMENT;

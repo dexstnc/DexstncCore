@@ -1,3 +1,3 @@
 <?php
-    include "components/levels/getLevel.php";
+    include "components/levels/getLevels.php";
 ?>

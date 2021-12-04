@@ -20,7 +20,7 @@
         }
         public function checkString($str){
             $str = trim($str);
-            if(preg_replace("/[A-Za-z0-9\s\-_]+/", "-", $str) === "-"){
+            if(preg_replace("/[A-Za-z0-9\s\-_,.]+/", "-", $str) === "-"){
                 return $str;
             } else return "";
         }
@@ -73,20 +73,27 @@
             $query = $db->prepare("SELECT userID FROM users WHERE accountID = :accountID LIMIT 1");
             $query->execute([':accountID' => $accountID]);
             if($query->rowCount() == 0){
-                // Unique names
-                if($uniqueNames === true){
-                    $query = $db->prepare("SELECT count(*) FROM users WHERE userName LIKE :userName");
-                    $query->execute([':userName' => $userName]);
-                    if($query->fetchColumn() != 0) exit("-1");
-                }
-                
-                $query = $db->prepare("INSERT INTO users (accountID, userName, lastActive, IP) VALUES (:accountID, :userName, :lastActive, :ip)");
-                $query->execute([':accountID' => $accountID, ':userName' => $userName, ':lastActive' => time(), ':ip' => $ip]);
-                return $db->lastInsertId();
+                if($userName !== "Unknown"){
+                    // Unique names
+                    if($uniqueNames === true){
+                        $query = $db->prepare("SELECT count(*) FROM users WHERE userName LIKE :userName");
+                        $query->execute([':userName' => $userName]);
+                        if($query->fetchColumn() != 0) exit("-1");
+                    }
+                    
+                    $query = $db->prepare("INSERT INTO users (accountID, userName, lastActive, IP) VALUES (:accountID, :userName, :lastActive, :ip)");
+                    $query->execute([':accountID' => $accountID, ':userName' => $userName, ':lastActive' => time(), ':ip' => $ip]);
+                    return $db->lastInsertId();
+                } else exit("-1");
             } else {
                 $userID = $query->fetchColumn();
-                $query = $db->prepare("UPDATE users SET userName = :userName, IP = :ip WHERE accountID = :accountID");
-                $query->execute([':userName' => $userName, ':ip' => $ip, ':accountID' => $accountID]);
+                if($userName !== "Unknown"){
+                    $query = $db->prepare("UPDATE users SET userName = :userName, IP = :ip WHERE accountID = :accountID");
+                    $query->execute([':userName' => $userName, ':ip' => $ip, ':accountID' => $accountID]);
+                } else {
+                    $query = $db->prepare("UPDATE users SET IP = :ip WHERE accountID = :accountID");
+                    $query->execute([':ip' => $ip, ':accountID' => $accountID]);
+                }
                 return $userID;
             }
         }

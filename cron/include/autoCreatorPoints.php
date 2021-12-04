@@ -27,13 +27,14 @@
     }
 
     // Add creatore points
-    $query = $db->prepare("SELECT levels.userID AS userID, users.creatorPoints AS creatorPoints, sum(levels.rated) AS rated FROM levels INNER JOIN users ON levels.userID = users.userID GROUP BY userID");
+    $query = $db->prepare("SELECT levels.userID AS userID, users.creatorPoints AS creatorPoints, sum(levels.rated) AS rated, sum(levels.featured) AS featured FROM levels INNER JOIN users ON levels.userID = users.userID GROUP BY userID");
     $query->execute();
     $users = $query->fetchAll();
     $newUsers = "";
     foreach($users AS $user){
         $creatorPoints = 0;
         $creatorPoints += $user["rated"] * $ratedCPs;
+        $creatorPoints += $user["featured"] * $featuredCPs;
         if($creatorPoints != $user["creatorPoints"]) $newUsers .= $user["userID"].":".$creatorPoints.", ";
     }
     if($newUsers != ""){

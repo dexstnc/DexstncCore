@@ -10,7 +10,7 @@
 
     $ip = $f->getIP();
 
-    // Data - version 1.0
+    // Data - version 1.2
     $accountID = isset($_POST["udid"]) ? $f->checkString($_POST["udid"]) : "";
     $userName = isset($_POST["userName"]) ? $f->checkDefaultString($_POST["userName"]) : "";
     $levelID = isset($_POST["levelID"]) ? $f->checkNum($_POST["levelID"]) : "";
