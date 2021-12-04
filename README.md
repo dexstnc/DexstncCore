@@ -43,7 +43,7 @@ Required version of PHP: 5.4+ (tested up to 7.4)
   * `Example 2:` !rate hard 5
   * `Example 3:` !rate demon 10 1
 * !unrate - unrate level
-* !suggest \<difficulty\> \<stars\> - send level for rating
+* !suggest \<difficulty\> \<stars\> \<featured\> - send level for rating
   * `Example 1:` !suggest easy
   * `Example 2:` !suggest hard 5
   * `Example 3:` !rate demon 10 1
