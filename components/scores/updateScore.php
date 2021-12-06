@@ -17,6 +17,9 @@
     // Data - version 1.6
     $iconType = isset($_POST["iconType"]) ? $f->checkNum($_POST["iconType"]) : 0;
     $coins = isset($_POST["coins"]) ? $f->checkNum($_POST["coins"]) : 0;
+    // Data - version 1.7
+    $special = isset($_POST["special"]) ? $f->checkNum($_POST["special"]) : 0;
+    $gameVersion = isset($_POST["gameVersion"]) ? $f->checkNum($_POST["gameVersion"]) : 0;
 
     // Check data
     if($accountID === "" OR is_numeric($accountID)) exit("-1");
@@ -28,6 +31,8 @@
     if($color2 === "") exit("-1");
     if($iconType === "") exit("-1");
     if($coins === "") exit("-1");
+    if($special === "") exit("-1");
+    if($gameVersion === "") exit("-1");
 
     if($_POST["secret"] === "Wmfd2893gb7"){
         // Score limit

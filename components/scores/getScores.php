@@ -80,6 +80,7 @@
             // Output - version 1.6
             $scoreString .= ":13:".$user["coins"]; // icon type
             $scoreString .= ":14:".$user["iconType"]; // icon type
+            $scoreString .= ":15:".$user["special"]; // icon type
             $scoreString .= "|";
         }
 
