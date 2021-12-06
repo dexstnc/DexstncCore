@@ -1,6 +1,6 @@
 <?php
     $checkGameVersion = false; // false - disable game version check; true - enable game version check
-    $totalGameVersion = 7;
+    $totalGameVersion = 10;
     /* 
     GAME VERSIONS
         1 - version 1.0
@@ -10,6 +10,7 @@
         5 - version 1.4
         6 - version 1.5
         7 - version 1.6
+        10 - version 1.7
     */
 
     $cronRun = 300; // Run CRON once every N seconds
@@ -44,7 +45,7 @@
         50 - version 1.3
     */
     $scoreLimit = true; // false - disable score limit; true - enable score limit
-    $scoreLimitStars = 102 + 20; // Additional limit for stars
+    $scoreLimitStars = 114 + 20; // Additional limit for stars
     /* 
     NUMBER OF STARS IN DIFFERENT VERSIONS
 	28 - version 1.0
@@ -54,6 +55,7 @@
         ? - version 1.4 (I'm dont have this version)
         ? - version 1.5 (I'm dont have this version)
         102 - version 1.6
+        114 - version 1.7
     */
     $scoreLimitDemons = 1 + 3; // Additional limit for demons
     /* 
