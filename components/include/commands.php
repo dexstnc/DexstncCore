@@ -56,23 +56,21 @@
                             default: return false;
                         }
 
-                        $stars = 0; $rated = 0; $featured = 0; $rateDate = 0;
+                        $stars = 0; $featured = 0;
                         if(!empty($commentArray[2]) AND is_numeric($commentArray[2])){
                             $stars = $commentArray[2];
-                            $rated = 1;
-                            $rateDate = time();
                         }
                         if(!empty($commentArray[3]) AND ($commentArray[3] == 0 OR $commentArray[3] == 1)) $featured = $commentArray[3];
 
                         // Command rate limit
                         if($commandRateLimit === true AND $stars > 0){
-                            if($commandRateLimitCheckStars){
+                            if($commandRateLimitCheckStars === true){
                                 if($commentArray[1] == "auto" AND $stars != 1) return false;
                                 if($commentArray[1] == "easy" AND $stars != 2) return false;
                                 if($commentArray[1] == "normal" AND $stars != 3) return false;
-                                if($commentArray[1] == "hard" AND ($stars != 4 OR $stars != 5)) return false;
-                                if($commentArray[1] == "harder" AND ($stars != 6 OR $stars != 7)) return false;
-                                if($commentArray[1] == "insane" AND ($stars != 8 OR $stars != 9)) return false;
+                                if($commentArray[1] == "hard" AND $stars != 4 AND $stars != 5) return false;
+                                if($commentArray[1] == "harder" AND $stars != 6 AND $stars != 7) return false;
+                                if($commentArray[1] == "insane" AND $stars != 8 AND $stars != 9) return false;
                                 if($commentArray[1] == "demon" AND $stars != 10) return false;
                             }
 
@@ -83,8 +81,8 @@
                             }
                         }
 
-                        $query = $db->prepare("UPDATE levels SET difficulty = :difficulty, demon = :demon, auto = :auto, stars = :stars, rated = :rated, featured = :featured, rateDate = :rateDate WHERE levelID = :levelID AND deleted = 0");
-                        $query->execute([':difficulty' => $difficulty, ':demon' => $demon, ':auto' => $auto, ':stars' => $stars, ':rated' => $rated, ':featured' => $featured, ':rateDate' => $rateDate, ':levelID' => $levelID]);
+                        $query = $db->prepare("UPDATE levels SET difficulty = :difficulty, demon = :demon, auto = :auto, stars = :stars, rated = 1, featured = :featured, rateDate = :rateDate WHERE levelID = :levelID AND deleted = 0");
+                        $query->execute([':difficulty' => $difficulty, ':demon' => $demon, ':auto' => $auto, ':stars' => $stars, ':featured' => $featured, ':rateDate' => time(), ':levelID' => $levelID]);
                         $query = $db->prepare("INSERT INTO actions (type, value1, value2, value3, value4, userID, IP, actionDate) VALUES (5, :levelID, :difficulty, :stars, :featured, :userID, :ip, :time)");
                         $query->execute([':levelID' => $levelID, ':difficulty' => $difficulty, ':stars' => $stars, ':featured' => $featured, ':userID' => $userID, ':ip' => $ip, ':time' => time()]);
 
@@ -150,13 +148,13 @@
 
                         // Command rate limit
                         if($commandRateLimit === true AND $stars > 0){
-                            if($commandRateLimitCheckStars){
+                            if($commandRateLimitCheckStars === true){
                                 if($commentArray[1] == "auto" AND $stars != 1) return false;
                                 if($commentArray[1] == "easy" AND $stars != 2) return false;
                                 if($commentArray[1] == "normal" AND $stars != 3) return false;
-                                if($commentArray[1] == "hard" AND ($stars != 4 OR $stars != 5)) return false;
-                                if($commentArray[1] == "harder" AND ($stars != 6 OR $stars != 7)) return false;
-                                if($commentArray[1] == "insane" AND ($stars != 8 OR $stars != 9)) return false;
+                                if($commentArray[1] == "hard" AND $stars != 4 AND $stars != 5) return false;
+                                if($commentArray[1] == "harder" AND $stars != 6 AND $stars != 7) return false;
+                                if($commentArray[1] == "insane" AND $stars != 8 AND $stars != 9) return false;
                                 if($commentArray[1] == "demon" AND $stars != 10) return false;
                             }
 
@@ -201,7 +199,26 @@
                             $query->execute([':levelID' => $levelID, ':featured' => $featured, ':userID' => $userID, ':ip' => $ip, ':time' => time()]);
 
                             return true;
-                        } else return false;
+                        }
+                    }
+                break;
+                case "!rename":
+                    if($renameOwnLevels === true OR $f->checkPossibility($userID, "commandRename")){
+                        $newLevelName = "";
+                        for($i = 1; $i < count($commentArray); $i++) $newLevelName .= $commentArray[$i].' ';
+                        $newLevelName = $f->checkDefaultString(substr($newLevelName, 0, -1));
+                        if($newLevelName != "" AND strlen($newLevelName) <= 32){
+                            $query = $db->prepare("SELECT levelName FROM levels WHERE levelID = :levelID AND deleted = 0");
+                            $query->execute([':levelID' => $levelID]);
+                            if($newLevelName != $query->fetchColumn()){
+                                $query = $db->prepare("UPDATE levels SET levelName = :newLevelName WHERE levelID = :levelID AND deleted = 0");
+                                $query->execute([':newLevelName' => $newLevelName, ':levelID' => $levelID]);
+                                $query = $db->prepare("INSERT INTO actions (type, value1, value2, userID, IP, actionDate) VALUES (9, :levelID, :newLevelName, :userID, :ip, :time)");
+                                $query->execute([':levelID' => $levelID, ':newLevelName' => $newLevelName, ':userID' => $userID, ':ip' => $ip, ':time' => time()]);
+
+                                return true;
+                            }
+                        }
                     }
                 break;
                 case "!setacc":

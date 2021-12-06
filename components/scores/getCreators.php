@@ -18,7 +18,7 @@
         $scoreCount = floor($scoreCount);
 
         $query = $db->prepare("SET @rownum := 0;"); $query->execute();
-        $query = $db->prepare("SELECT @rownum := @rownum + 1 AS rownum, users.* FROM users WHERE creatorPoints > 0 AND scoreBan = 0 ORDER BY creatorPoints DESC LIMIT $scoreCount");
+        $query = $db->prepare("SELECT @rownum := @rownum + 1 AS rownum, users.* FROM users WHERE creatorPoints > 0 AND scoreBan = 0 ORDER BY creatorPoints DESC, userName ASC LIMIT $scoreCount");
         $query->execute();
         $users = $query->fetchAll();
 
@@ -35,6 +35,9 @@
                 $scoreString .= ":9:".$user["icon"]; // icon
                 $scoreString .= ":10:".$user["color1"]; // color1
                 $scoreString .= ":11:".$user["color2"]; // color2
+                // Output - version 1.6
+                $scoreString .= ":13:".$user["coins"]; // icon type
+                $scoreString .= ":14:".$user["iconType"]; // icon type
                 $scoreString .= "|";
             }
         } else $scoreString .= "1:No players with more than zero creator points:2:0:3:0:4:0:6:0:7:0:8:0:9:0:10:0:11:3|";

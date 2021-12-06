@@ -20,7 +20,7 @@
                 $scoreCount = floor($scoreCount);
 
                 $query = $db->prepare("SET @rownum := 0;"); $query->execute();
-                $query = $db->prepare("SELECT @rownum := @rownum + 1 AS rownum, users.* FROM users WHERE stars > 0 AND scoreBan = 0 ORDER BY stars DESC LIMIT $scoreCount");
+                $query = $db->prepare("SELECT @rownum := @rownum + 1 AS rownum, users.* FROM users WHERE stars > 0 AND scoreBan = 0 ORDER BY stars DESC, demons DESC, userName ASC LIMIT $scoreCount");
                 $query->execute();
                 $users = $query->fetchAll();
 
@@ -29,7 +29,7 @@
             break;
             case "relative":
                 $scoreCount = floor($scoreCount / 2);
-                $usersTable = "users.* FROM users WHERE scoreBan = 0 ORDER BY stars DESC, demons DESC, userName DESC";
+                $usersTable = "users.* FROM users WHERE scoreBan = 0 ORDER BY stars DESC, demons DESC, userName ASC";
 
                 $query = $db->prepare("SET @rownum := 0;"); $query->execute();
                 $query = $db->prepare("SELECT a.rownum FROM (SELECT @rownum := @rownum + 1 AS rownum, $usersTable) AS a WHERE accountID = :accountID LIMIT 1");
@@ -40,9 +40,9 @@
                     $query = $db->prepare("SET @rownum1 := 0;"); $query->execute();
                     $query = $db->prepare("SET @rownum2 := 0;"); $query->execute();
                     $query = $db->prepare("SELECT a.* FROM ((
-                        SELECT b.* FROM (SELECT @rownum1 := @rownum1 + 1 AS rownum, $usersTable) AS b WHERE b.rownum < :rownum ORDER BY b.rownum DESC LIMIT $scoreCount
+                        SELECT b.* FROM (SELECT @rownum1 := @rownum1 + 1 AS rownum, $usersTable) AS b WHERE b.rownum <= :rownum ORDER BY b.rownum DESC LIMIT $scoreCount
                     ) UNION (
-                        SELECT c.* FROM (SELECT @rownum2 := @rownum2 + 1 AS rownum, $usersTable) AS c WHERE c.rownum >= :rownum ORDER BY c.rownum ASC LIMIT $scoreCount
+                        SELECT c.* FROM (SELECT @rownum2 := @rownum2 + 1 AS rownum, $usersTable) AS c WHERE c.rownum > :rownum ORDER BY c.rownum ASC LIMIT $scoreCount
                     )) AS a ORDER BY a.rownum ASC");
                     $query->execute([':rownum' => $rownum]);
                     $users = $query->fetchAll();
@@ -54,7 +54,12 @@
 
             break;
             case "week":
-                
+                $query = $db->prepare("SET @rownum := 0;"); $query->execute();
+                $query = $db->prepare("SELECT @rownum := @rownum + 1 AS rownum, users.* FROM users WHERE lastActive > :time AND scoreBan = 0 ORDER BY stars DESC, demons DESC, userName ASC LIMIT $scoreCount");
+                $query->execute([':time' => time() - 604800]);
+                $users = $query->fetchAll();
+
+                if(count($users) == 0) exit("1:No players active less than a week ago:2:0:3:0:4:0:6:0:7:0:8:0:9:0:10:0:11:3");
             break;
             default: exit("-1");
         }

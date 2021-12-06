@@ -53,11 +53,14 @@
             if($query->fetchColumn() >= $levelLimitCount) exit("-1");
         }
 
-        $query = $db->prepare("SELECT levelID FROM levels WHERE levelName = :levelName AND userID = :userID LIMIT 1");
+        $levelID = 0; $deleted = 0;
+        $query = $db->prepare("SELECT levelID, deleted FROM levels WHERE levelName = :levelName AND userID = :userID LIMIT 1");
         $query->execute([':levelName' => $levelName, ':userID' => $userID]);
         if($query->rowCount() != 0){
-            $levelID = $query->fetchColumn();
-        } else $levelID = 0;
+            $levelInfo = $query->fetch();
+            $levelID = $levelInfo["levelID"];
+            $deleted = $levelInfo["deleted"];
+        }
 
         if($levelID == 0){
             $query = $db->prepare("INSERT INTO levels (levelName, levelDesc, levelVersion, levelLength, audioTrack, gameVersion, uploadDate, userID) VALUES (:levelName, :levelDesc, :levelVersion, :levelLength, :audioTrack, :gameVersion, :uploadDate, :userID)");
@@ -68,6 +71,7 @@
             $query = $db->prepare("UPDATE levels SET levelDesc = :levelDesc, levelVersion = :levelVersion, levelLength = :levelLength, audioTrack = :audioTrack, gameVersion = :gameVersion, updateDate = :updateDate, deleted = 0 WHERE levelName = :levelName AND userID = :userID");
             $query->execute([':levelDesc' => $levelDesc, ':levelVersion' => $levelVersion, ':levelLength' => $levelLength, ':audioTrack' => $audioTrack, ':gameVersion' => $gameVersion, ':updateDate' => time(), ':levelName' => $levelName, ':userID' => $userID]);
             file_put_contents(dirname(__FILE__)."/../../data/levels/$levelID", $levelString);
+            if($deleted == 1 AND file_exists(dirname(__FILE__)."/../../data/levels/deleted/$levelID")) unlink(dirname(__FILE__)."/../../data/levels/deleted/$levelID");
         }
 
         echo $levelID;

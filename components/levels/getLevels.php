@@ -90,6 +90,7 @@
             case "6": // Featured
                 if($showRatedLevelsInFeatured === true){
                     $where[] = "rated = 1 AND rateDate > 0";
+                    if($showRatedLevelsWithoutStars === false) $where[] = "stars > 0";
                 } else $where[] = "featured = 1 AND rateDate > 0";
                 $order = "rateDate DESC";
                 break;

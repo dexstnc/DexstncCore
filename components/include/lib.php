@@ -29,6 +29,9 @@
                 case "9":
                     return "!featured";
                     break;
+                case "10":
+                    return "!rename";
+                    break;
                 default:
                     return "Unknown action";
             }
