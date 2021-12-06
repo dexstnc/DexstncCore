@@ -57,6 +57,8 @@ CREATE TABLE `levels` (
   `featured` int NOT NULL DEFAULT '0',
   `levelVersion` int NOT NULL DEFAULT '1',
   `levelLength` int NOT NULL DEFAULT '0',
+  `password` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `original` int NOT NULL DEFAULT '0',
   `audioTrack` int NOT NULL DEFAULT '0',
   `gameVersion` int NOT NULL DEFAULT '3',
   `uploadDate` int NOT NULL,
@@ -70,8 +72,8 @@ CREATE TABLE `levels` (
 DROP TABLE IF EXISTS `mappacks`;
 CREATE TABLE `mappacks` (
   `mapPackID` int NOT NULL,
-  `mapPackName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `mapPackNameColor` varchar(11) COLLATE utf8_unicode_ci NOT NULL DEFAULT '000,000,000',
+  `mapPackName` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `mapPackNameColor` varchar(11) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '000,000,000',
   `level1` int NOT NULL DEFAULT '0',
   `level2` int NOT NULL DEFAULT '0',
   `level3` int NOT NULL DEFAULT '0',
@@ -126,8 +128,10 @@ CREATE TABLE `users` (
   `icon` int NOT NULL DEFAULT '0',
   `color1` int NOT NULL DEFAULT '0',
   `color2` int NOT NULL DEFAULT '0',
+  `special` int NOT NULL DEFAULT '0',
   `lastActive` int NOT NULL DEFAULT '0',
   `IP` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1',
+  `gameVersion` int NOT NULL DEFAULT '0',
   `scoreBan` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
