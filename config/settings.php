@@ -14,7 +14,8 @@
 
     $cronRun = 300; // Run CRON once every N seconds
     
-    $showRatedLevelsInFeatured = false; // Show rated levels in featured
+    $showRatedLevelsWithoutStars = true; // Show rated levels without stars
+    $showRatedLevelsInFeatured = true; // Show rated levels in featured
     $ratedCPs = 1; // The number of creator points for rated level
     $featuredCPs = 1; // The number of creator points for featured level
 
@@ -60,6 +61,8 @@
         0 - version 1.3
         1 - version 1.6
     */
+
+    $renameOwnLevels = false; // false - users can't rename their level; true - users can rename their level
 
     $commandRateLimit = true; // false - disable command rate limit; true - enable command rate limit
     $commandRateLimitCheckStars = true; // false - disable checking stars for difficulty; true - enable checking stars for difficulty
