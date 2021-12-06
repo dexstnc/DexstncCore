@@ -15,7 +15,7 @@
                     $query->execute([':levelID' => $levelID]);
                     if($query->fetchColumn() == $userID OR $f->checkPossibility($userID, "commandDelete")){
                         if(file_exists(dirname(__FILE__)."/../../data/levels/$levelID")){
-                            rename(dirname(__FILE__)."/../../data/levels/$levelID", dirname(__FILE__)."/../../data/levels/deleted/$levelID");
+                            if(file_exists(dirname(__FILE__)."/../../data/levels/$levelID")) rename(dirname(__FILE__)."/../../data/levels/$levelID", dirname(__FILE__)."/../../data/levels/deleted/$levelID");
 
                             $query = $db->prepare("UPDATE levels SET deleted = 1 WHERE levelID = :levelID AND deleted = 0");
                             $query->execute([':levelID' => $levelID]);

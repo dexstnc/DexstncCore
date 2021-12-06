@@ -16,6 +16,11 @@
     $star = isset($_POST["star"]) ? $f->checkNum($_POST["star"]) : 0;
     // Data - version 1.6
     // $total = isset($_POST["total"]) ? $f->checkNum($_POST["total"]) : 0;
+    // Data - version 1.7
+    $uncompleted = isset($_POST["uncompleted"]) ? $f->checkNum($_POST["uncompleted"]) : 0;
+    $featured = isset($_POST["featured"]) ? $f->checkNum($_POST["featured"]) : 0;
+    $song = isset($_POST["song"]) ? $f->checkNum($_POST["song"]) : 0;
+    $completedLevels = isset($_POST["completedLevels"]) ? $f->checkNumString(substr($_POST["completedLevels"], 1, -1)) : "";
 
     // Check data
     if($type === "") exit("-1");
@@ -24,6 +29,9 @@
     if($page === "") exit("-1");
     if($star === "") exit("-1");
     // if($total === "") exit("-1");
+    if($uncompleted === "") exit("-1");
+    if($featured === "") exit("-1");
+    if($song === "") exit("-1");
 
     if($_POST["secret"] === "Wmfd2893gb7"){
         $offset = $page*10;
@@ -56,6 +64,21 @@
 
         if($star == 1){
             $where[] = "stars > 0";
+        }
+        
+        if($featured == 1){
+            $where[] = "featured > 0";
+        }
+
+        if($uncompleted == 1){
+            if($completedLevels != ""){
+                $where[] = "levelID NOT IN ($completedLevels)";
+            }
+        }
+
+        if($song > 0){
+            $song -= 1;
+            $where[] = "audioTrack = $song";
         }
 
         switch($type){
@@ -171,6 +194,8 @@
             // Output - version 1.6
             $lvlString .= ":19:".$level["featured"]; // featured
             $lvlString .= ":25:".$level["auto"]; // is auto
+            // Output - version 1.8 (not checked)
+            $lvlString .= ":30:".$level["original"]; // original level
             $lvlString .= "|";
 
             $userString .= $level['userID'].":".$f->getUserName($level['userID'])."|";

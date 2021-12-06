@@ -115,5 +115,36 @@
                 return $query->fetchColumn();
             } else return 0;
         }
+        public function getDateString($time){
+            if ($time < 0) return 'From future?';
+            if ($time < 60){
+                $time = floor($time);
+                $string = ['second', 'seconds'];
+            } elseif ($time < 3600){
+                $time = floor($time/60);
+                $string = ['minute', 'minutes'];
+            } elseif ($time < 86400){
+                $time = floor($time/3600);
+                $string = ['hour', 'hours'];
+            } elseif ($time < 604800){
+                $time = floor($time/86400);
+                $string = ['day', 'days'];
+            } elseif ($time < 2628000){
+                $time = floor($time/604800);
+                $string = ['week', 'weeks'];
+            } elseif ($time < 31536000){
+                $time = floor($time/2628000);
+                $string = ['mounth', 'mounths'];
+            } else {
+                $time = floor($time/31536000);
+                $string = ['year', 'years'];
+            }
+
+            if (substr($time, -1) == 1){
+                return $time.' '.$string[0];
+            } else {
+                return $time.' '.$string[1];
+            }
+        }
     }
 ?>

@@ -26,6 +26,8 @@
     // Data - version 1.6
     // $auto = isset($_POST["auto"]) ? $f->checkNum($_POST["auto"]) : 0;
     // $levelReplay = isset($_POST["levelReplay"]) ? $f->checkMultiString($_POST["levelReplay"]) : "";
+    // Data - version 1.7
+    $password = isset($_POST["password"]) ? $f->checkNum($_POST["password"]) : 0;
 
     // Check data
     if($accountID === "" OR is_numeric($accountID)) exit("-1");
@@ -38,11 +40,13 @@
     if($audioTrack === "") exit("-1");
     if($gameVersion === "") exit("-1");
     // if($auto === "") exit("-1");
+    if($password === "" OR strlen($password) > 5) exit("-1");
 
     if($_POST["secret"] === "Wmfd2893gb7"){
         if($checkGameVersion AND $gameVersion != $totalGameVersion) exit("-1");
         $levelDesc = str_replace(":", "-", $levelDesc);
         $levelDesc = base64_encode($levelDesc);
+        if($password > 1) $password = substr($password, 1);
 
         $userID = $f->getUserID($accountID, $userName);
 
@@ -63,13 +67,13 @@
         }
 
         if($levelID == 0){
-            $query = $db->prepare("INSERT INTO levels (levelName, levelDesc, levelVersion, levelLength, audioTrack, gameVersion, uploadDate, userID) VALUES (:levelName, :levelDesc, :levelVersion, :levelLength, :audioTrack, :gameVersion, :uploadDate, :userID)");
-            $query->execute([':levelName' => $levelName, ':levelDesc' => $levelDesc, ':levelVersion' => $levelVersion, ':levelLength' => $levelLength, ':audioTrack' => $audioTrack, ':gameVersion' => $gameVersion, ':uploadDate' => time(), ':userID' => $userID]);
+            $query = $db->prepare("INSERT INTO levels (levelName, levelDesc, levelVersion, levelLength, password, audioTrack, gameVersion, uploadDate, userID) VALUES (:levelName, :levelDesc, :levelVersion, :levelLength, :password, :audioTrack, :gameVersion, :uploadDate, :userID)");
+            $query->execute([':levelName' => $levelName, ':levelDesc' => $levelDesc, ':levelVersion' => $levelVersion, ':levelLength' => $levelLength, ':password' => $password, ':audioTrack' => $audioTrack, ':gameVersion' => $gameVersion, ':uploadDate' => time(), ':userID' => $userID]);
             $levelID = $db->lastInsertId();
             file_put_contents(dirname(__FILE__)."/../../data/levels/$levelID", $levelString);
         } else {
-            $query = $db->prepare("UPDATE levels SET levelDesc = :levelDesc, levelVersion = :levelVersion, levelLength = :levelLength, audioTrack = :audioTrack, gameVersion = :gameVersion, updateDate = :updateDate, deleted = 0 WHERE levelName = :levelName AND userID = :userID");
-            $query->execute([':levelDesc' => $levelDesc, ':levelVersion' => $levelVersion, ':levelLength' => $levelLength, ':audioTrack' => $audioTrack, ':gameVersion' => $gameVersion, ':updateDate' => time(), ':levelName' => $levelName, ':userID' => $userID]);
+            $query = $db->prepare("UPDATE levels SET levelDesc = :levelDesc, levelVersion = :levelVersion, levelLength = :levelLength, password = :password, audioTrack = :audioTrack, gameVersion = :gameVersion, updateDate = :updateDate, deleted = 0 WHERE levelName = :levelName AND userID = :userID");
+            $query->execute([':levelDesc' => $levelDesc, ':levelVersion' => $levelVersion, ':levelLength' => $levelLength, ':password' => $password, ':audioTrack' => $audioTrack, ':gameVersion' => $gameVersion, ':updateDate' => time(), ':levelName' => $levelName, ':userID' => $userID]);
             file_put_contents(dirname(__FILE__)."/../../data/levels/$levelID", $levelString);
             if($deleted == 1 AND file_exists(dirname(__FILE__)."/../../data/levels/deleted/$levelID")) unlink(dirname(__FILE__)."/../../data/levels/deleted/$levelID");
         }
