@@ -95,7 +95,7 @@ CREATE TABLE `roles` (
   `commandRate` int NOT NULL DEFAULT '0',
   `commandFeatured` int NOT NULL DEFAULT '0',
   `commandSuggest` int NOT NULL DEFAULT '0',
-  `commandRename` int NOT NULL DEFAULT '0'
+  `commandRename` int NOT NULL DEFAULT '0',
   `commandSetacc` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
