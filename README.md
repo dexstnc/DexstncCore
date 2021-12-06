@@ -1,6 +1,6 @@
 ## DX Core
 
-Core version: `1.6.001`
+Core version: `1.6.002`
 
 Supported version of Geometry Dash: 1.0 - 1.6
 
@@ -49,6 +49,9 @@ Required version of PHP: 5.4+ (tested up to 7.4)
   * `Example 3:` !rate demon 10 1
 * !featured - toggle featured on level
 * !delete - delete level
+* !rename \<new level name\>
+  * `Example 1:` !rename NewLevelName
+  * `Example 2:` !rename Its so hard
 * !setacc \<userName\> - transfer level to another account
   * `Example:` !setacc DeXotik
 
