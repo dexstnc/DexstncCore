@@ -2,7 +2,7 @@
 
 Core version: `1.7.001`
 
-Supported version of Geometry Dash: 1.0 - 1.6
+Supported version of Geometry Dash: 1.0 - 1.7
 
 Required version of PHP: 5.4+ (tested up to 7.4)
 
