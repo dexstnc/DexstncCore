@@ -1,8 +1,8 @@
 ## DX Core
 
-Core version: `1.7.001`
+Core version: `2.0.001`
 
-Supported version of Geometry Dash: 1.0 - 1.7
+Supported version of Geometry Dash: 1.0
 
 Required version of PHP: 5.4+ (tested up to 7.4)
 
@@ -13,7 +13,7 @@ Required version of PHP: 5.4+ (tested up to 7.4)
 1. Upload the files on a webserver
 2. Import `database.sql` into a MySQL/MariaDB database
 3. Modify your database connection details in a `config/database.php` file
-4. Configure the core in a `config/settings.php` file
+4. Configure the core in files in the `config/` folder
 
 
 ### Установка `(РУС)`
@@ -21,7 +21,7 @@ Required version of PHP: 5.4+ (tested up to 7.4)
 1. Загрузите файлы на веб-сервер
 2. Загрузите `database.sql` до базы данных MySQL/MariaDB
 3. Измените занчения для подключения к базе данных в файле `config/database.php`
-4. Настройте ядро в файле `config/settings.php`
+4. Настройте ядро в файлаз папки `config/`
 
 ---
 
@@ -34,26 +34,6 @@ Required version of PHP: 5.4+ (tested up to 7.4)
 
 1. Замените все папки, кроме `data`
 2. Обновите базу данных с помощью файлов в папке `__updates`. Внимательно следите за версией для правильного обновления
-
----
-
-### Commands in comments
-* !rate \<difficulty\> \<stars\> \<featured\> - rate level
-  * `Example 1:` !rate easy
-  * `Example 2:` !rate hard 5
-  * `Example 3:` !rate demon 10 1
-* !unrate - unrate level
-* !suggest \<difficulty\> \<stars\> \<featured\> - send level for rating
-  * `Example 1:` !suggest easy
-  * `Example 2:` !suggest hard 5
-  * `Example 3:` !rate demon 10 1
-* !featured - toggle featured on level
-* !delete - delete level
-* !rename \<new level name\>
-  * `Example 1:` !rename NewLevelName
-  * `Example 2:` !rename Its so hard
-* !setacc \<userName\> - transfer level to another account
-  * `Example:` !setacc DeXotik
 
 ---
 
