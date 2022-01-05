@@ -1,8 +1,8 @@
 ## DX Core
 
-Core version: `2.0.001`
+Core version: `2.0.002`
 
-Supported version of Geometry Dash: 1.0
+Supported version of Geometry Dash: 1.0 - 1.1
 
 Required version of PHP: 5.4+ (tested up to 7.4)
 
