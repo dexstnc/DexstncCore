@@ -1,5 +1,5 @@
 <?php
-    $showInFeatured = 0; // Show levels with specific parameters
+    $showInFeatured = 2; // Show levels with specific parameters
     /*  0 - levels have difficulty
         2 - levels have featured    */
 
@@ -15,6 +15,7 @@
         3 -   Long  */
 
     $checkAudioTrack["use"] = false; // Checking audiotrack at the level
-    $checkAudioTrack["count"] = 6; // Maximum audiotrack at the level
-    /*  6 - version 1.0  */
+    $checkAudioTrack["count"] = 7; // Maximum audiotrack at the level
+    /*  6 - version 1.0  
+        7 - version 1.1  */
 ?>

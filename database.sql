@@ -26,6 +26,17 @@ CREATE TABLE `bans` (
   `reason` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE `comments` (
+  `commentID` int NOT NULL,
+  `levelID` int NOT NULL,
+  `comment` text COLLATE utf8_unicode_ci NOT NULL,
+  `likes` int NOT NULL DEFAULT '0',
+  `uploadDate` int NOT NULL,
+  `userID` int NOT NULL,
+  `IP` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 DROP TABLE IF EXISTS `levels`;
 CREATE TABLE `levels` (
   `levelID` int NOT NULL,
@@ -65,6 +76,9 @@ ALTER TABLE `actions`
 ALTER TABLE `bans`
   ADD PRIMARY KEY (`banID`);
 
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`commentID`);
+
 ALTER TABLE `levels`
   ADD PRIMARY KEY (`levelID`);
 
@@ -77,6 +91,9 @@ ALTER TABLE `actions`
 
 ALTER TABLE `bans`
   MODIFY `banID` int NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `comments`
+  MODIFY `commentID` int NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `levels`
   MODIFY `levelID` int NOT NULL AUTO_INCREMENT;

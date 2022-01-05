@@ -35,6 +35,9 @@
                 case "sls": // String for level string
                     $string = preg_replace("/[^a-zA-Z0-9\,\;]/", "", $string);
                 break;
+                case "sc": // String for comment
+                    $string = preg_replace("/[^a-zA-Z0-9\,\.\:\-\!\?\/\(\)]/", "", $string);
+                break;
             }
 
             return $string;

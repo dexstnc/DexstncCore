@@ -21,7 +21,7 @@
                 $likes = $query->fetchColumn() + 1;
                 $query = $db->prepare("UPDATE levels SET likes = :likes WHERE levelID = :levelID");
                 $query->execute([":likes" => $likes, ":levelID" => $levelID]);
-                $query = $db->prepare("INSERT INTO actions (type, value1, IP, actionDate) VALUES (2, :levelID, :ip, :time)");
+                $query = $db->prepare("INSERT INTO actions (type, value1, value2, IP, actionDate) VALUES (2, :levelID, 1, :ip, :time)");
                 $query->execute([":levelID" => $levelID, ":ip" => $ip, ":time" => time()]);
 
                 exit("1");

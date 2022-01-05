@@ -1,7 +1,8 @@
 <?php
     $checkGameVersion["use"]   = false; // Checking the game version
     $checkGameVersion["value"] = 1; // Server version of the game
-    /*  1 - version 1.0  */
+    /*  1 - version 1.0
+        2 - version 1.1  */
 
     $checkUserCookies["use"]    = true; // Checking the user cookies for protection
     $checkUserCookies["secure"] = false;

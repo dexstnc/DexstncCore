@@ -5,5 +5,5 @@
     $dbPort = "3306"; // Port for connecting to the database (can be removed if you are not using it)
 	$dbUser = "root"; // Database login
 	$dbPassword = "root"; // Database password
-	$dbName = "1.0"; // Database name
+	$dbName = "dx-core"; // Database name
 ?>

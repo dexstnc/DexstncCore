@@ -1,3 +1,4 @@
 1 - download level
-2 - like level
+2 - like or dislike level
 3 - rate level
+4 - like or dislike comment
