@@ -14,14 +14,14 @@
     $rating = $gp->getPost("rating", "n"); if($rating === "") exit("-1");
 
     if($_POST["secret"] === "Wmfd2893gb7"){
-        $query = $db->prepare("SELECT count(*) FROM actions WHERE type = 3 AND value1 = :levelID AND IP = :ip");
+        $query = $db->prepare("SELECT count(*) FROM actions WHERE type = 3 AND itemID = :levelID AND IP = :ip");
         $query->execute([":levelID" => $levelID, ":ip" => $ip]);
         if($query->fetchColumn() == 0){
-            $query = $db->prepare("INSERT INTO actions (type, value1, value2, IP, actionDate) VALUES (3, :levelID, :rating, :ip, :time)");
-            $query->execute([":levelID" => $levelID, ":rating" => $rating, ":ip" => $ip, ":time" => time()]);
+            $query = $db->prepare("INSERT INTO actions (type, value1, value2, actionDate, itemID, IP) VALUES (3, 'Rate level', :rating, :time, :levelID, :ip)");
+            $query->execute([":rating" => $rating, ":time" => time(), ":levelID" => $levelID, ":ip" => $ip]);
 
             if($autoRate["use"] === true){
-                $query = $db->prepare("SELECT value2 AS rate FROM actions WHERE type = 3 AND value1 = :levelID");
+                $query = $db->prepare("SELECT value2 AS rate FROM actions WHERE type = 3 AND itemID = :levelID");
                 $query->execute([":levelID" => $levelID]);
                 $rates = $query->fetchAll();
 
@@ -34,7 +34,7 @@
                 if($ratesCount >= $autoRate["count"]){
                     $totalDifficulty = floor($ratesSum/$ratesCount);
 
-                    $query = $db->prepare("UPDATE levels SET difficulty = :difficulty WHERE levelID = :levelID");
+                    $query = $db->prepare("UPDATE levels SET difficulty = :difficulty WHERE levelID = :levelID AND featured = 0");
                     $query->execute([":difficulty" => $totalDifficulty, ":levelID" => $levelID]);
                 }
             }

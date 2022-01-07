@@ -21,16 +21,18 @@
                 $table = "levels";
                 $item = "levelID";
                 $actionType = 2;
+                $actionValue = "+/- like on level";
             break;
             case 2: // Like or Dislike comment
                 $table = "comments";
                 $item = "commentID";
                 $actionType = 4;
+                $actionValue = "+/- like on comment";
             break;
             default: exit("-1");
         }
 
-        $query = $db->prepare("SELECT count(*) FROM actions WHERE type = :actionType AND value1 = :itemID AND IP = :ip");
+        $query = $db->prepare("SELECT count(*) FROM actions WHERE type = :actionType AND itemID = :itemID AND IP = :ip");
         $query->execute([":actionType" => $actionType, ":itemID" => $itemID, ":ip" => $ip]);
         if($query->fetchColumn() == 0){
             $query = $db->prepare("SELECT likes FROM $table WHERE $item = :itemID LIMIT 1");
@@ -42,8 +44,8 @@
                 $query = $db->prepare("UPDATE $table SET likes = :likes WHERE $item = :itemID");
                 $query->execute([":likes" => $likes, ":itemID" => $itemID]);
 
-                $query = $db->prepare("INSERT INTO actions (type, value1, value2, IP, actionDate) VALUES (:actionType, :itemID, :like, :ip, :time)");
-                $query->execute([":actionType" => $actionType, ":itemID" => $itemID, ":like" => $like, ":ip" => $ip, ":time" => time()]);
+                $query = $db->prepare("INSERT INTO actions (type, value1, value2, actionDate, itemID, IP) VALUES (:actionType, :actionValue, :like, :time, :itemID, :ip)");
+                $query->execute([":actionType" => $actionType, ":actionValue" => $actionValue, ":like" => $like, ":time" => time(), ":itemID" => $itemID, ":ip" => $ip]);
 
                 exit("1");
             } else exit("-1");

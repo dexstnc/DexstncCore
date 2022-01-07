@@ -5,6 +5,8 @@
     $gp = new DXGetPost();
     require_once dirname(__FILE__)."/../include/functions.php";
     $f = new Functions();
+    require_once dirname(__FILE__)."/../include/commands.php";
+    $cmd = new Commands();
     
     $f->checkBanIP();
     $ip = $f->getIP();
@@ -18,6 +20,8 @@
     if($_POST["secret"] === "Wmfd2893gb7"){
         $comment = base64_encode($comment);
         $userID = $f->getUserID($udid, $userName);
+
+        if($cmd->isCommand($levelID, $userID, base64_decode($comment))) exit("-1");
 
         if($uploadCommentLimit["use"] === true){
             $query = $db->prepare("SELECT count(*) FROM comments WHERE (IP = :ip OR userID = :userID) AND uploadDate > :time");

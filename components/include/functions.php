@@ -109,5 +109,14 @@
 
             return $userName;
         }
+        public function checkCapability($userID, $capability){
+            include dirname(__FILE__)."/database.php";
+
+            $query = $db->prepare("SELECT roles.$capability AS capability FROM roles JOIN roleassign ON roles.roleID = roleassign.roleID WHERE roleassign.userID = :userID LIMIT 1");
+            $query->execute([":userID" => $userID]);
+            if($query->rowCount() > 0){
+                return $query->fetchColumn();
+            } else return false;
+        }
     }
 ?>

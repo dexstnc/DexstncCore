@@ -2,3 +2,8 @@
 2 - like or dislike level
 3 - rate level
 4 - like or dislike comment
+5 - used command !delete
+6 - used command !rate
+7 - used command !unrate
+8 - used command !featured
+9 - used command !rename

@@ -17,14 +17,14 @@
         if($query->rowCount() == 1){
             $level = $query->fetch();
             
-            $query = $db->prepare("SELECT count(*) FROM actions WHERE type = 1 AND value1 = :levelID AND IP = :ip");
+            $query = $db->prepare("SELECT count(*) FROM actions WHERE type = 1 AND itemID = :levelID AND IP = :ip");
             $query->execute([":levelID" => $levelID, ":ip" => $ip]);
             if($query->fetchColumn() == 0){
-                $level["downloads"] = $level["downloads"] + 1;
+                $level["downloads"]++;
                 $query = $db->prepare("UPDATE levels SET downloads = :downloads WHERE levelID = :levelID");
                 $query->execute([":downloads" => $level["downloads"], ":levelID" => $levelID]);
-                $query = $db->prepare("INSERT INTO actions (type, value1, IP, actionDate) VALUES (1, :levelID, :ip, :time)");
-                $query->execute([":levelID" => $levelID, ":ip" => $ip, ":time" => time()]);
+                $query = $db->prepare("INSERT INTO actions (type, value1, actionDate, itemID, IP) VALUES (1, 'Download level', :time, :levelID, :ip)");
+                $query->execute([":time" => time(), ":levelID" => $levelID, ":ip" => $ip]);
             }
 
             if(file_exists(dirname(__FILE__)."/../../data/levels/$levelID")){
