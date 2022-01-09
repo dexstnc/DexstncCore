@@ -14,6 +14,8 @@
     $diff = $gp->getPost("diff", "ne+"); if($diff === "") exit("-1");
     $len = $gp->getPost("len", "ne+"); if($len === "") exit("-1");
     $page = $gp->getPost("page", "n"); if($page === "") exit("-1");
+    // Data from version 1.3
+    $star = $gp->getPost("star", "n", 0); if($star === "") exit("-1");
 
     if($_POST["secret"] === "Wmfd2893gb7"){
         $queryString = "";
@@ -24,6 +26,8 @@
         if($diff !== "-"){
             if($diff == -1){
                 $where[] = "difficulty = 0";
+            } elseif($diff == -2){
+                $where[] = "demon = 1";
             } elseif(is_numeric($diff)){
                 $where[] = "difficulty = $diff";
             } else $where[] = "difficulty IN ($diff)";
@@ -34,6 +38,8 @@
                 $where[] = "levelLength = $len";
             } else $where[] = "levelLength IN ($len)";
         }
+
+        if($star !== 0) $where[] = "stars > 0";
 
         switch($type){
             case "0": // Search levels
@@ -69,11 +75,10 @@
             case "6": // Featured
                 switch($showInFeatured){
                     case 0:
-                        $where[] = "difficulty > 0";
+                        $where[] = "difficulty > 0 OR featured = 1";
                     break;
                     case 1:
-                        // Stars only appear in 1.3
-                        $where[] = "stars > 0";
+                        $where[] = "stars > 0 OR featured = 1";
                     break;
                     case 2:
                         $where[] = "featured = 1";
@@ -86,14 +91,14 @@
             default: exit("-1");
         }
 
-        if(count($where) > 0) $queryString .= " WHERE (".implode(") AND (", $where).")";
+        if(count($where) > 0) $queryString .= " FROM levels WHERE (".implode(") AND (", $where).")";
         if($order) $queryString .= " ORDER BY $order";
 
-        $query = $db->prepare("SELECT count(*) FROM levels".$queryString);
+        $query = $db->prepare("SELECT count(*)".$queryString);
         $query->execute();
         $levelsCount = $query->fetchColumn();
 
-        $query = $db->prepare("SELECT * FROM levels".$queryString." LIMIT 10 OFFSET $offset");
+        $query = $db->prepare("SELECT *".$queryString." LIMIT 10 OFFSET $offset");
         $query->execute();
         $levels = $query->fetchAll();
 
@@ -114,6 +119,9 @@
             $lvlString .= ":14:".$level["likes"]; // likes on level
             $lvlString .= ":15:".$level["levelLength"]; // level length
             $lvlString .= ":16:0"; // likes - count = likes on level
+            // Output for version 1.3
+            $lvlString .= ":17:".$level["demon"]; // is demon
+            $lvlString .= ":18:".$level["stars"]; // stars
             $lvlString .= "|";
 
             $userString .= $level["userID"].":".$f->getUserName($level["userID"])."|";

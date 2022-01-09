@@ -7,3 +7,4 @@
 7 - used command !unrate
 8 - used command !featured
 9 - used command !rename
+10 - user is update score

@@ -48,8 +48,10 @@ CREATE TABLE `levels` (
   `downloads` int NOT NULL DEFAULT '0',
   `likes` int NOT NULL DEFAULT '0',
   `difficulty` int NOT NULL DEFAULT '0',
+  `auto` tinyint(1) NOT NULL DEFAULT '0',
+  `demon` tinyint(1) NOT NULL DEFAULT '0',
   `stars` int NOT NULL DEFAULT '0',
-  `featured` int NOT NULL DEFAULT '0',
+  `featured` tinyint(1) NOT NULL DEFAULT '0',
   `levelVersion` int NOT NULL,
   `levelLength` int NOT NULL,
   `audioTrack` int NOT NULL DEFAULT '0',
@@ -59,7 +61,7 @@ CREATE TABLE `levels` (
   `rateDate` int NOT NULL DEFAULT '0',
   `userID` int NOT NULL,
   `IP` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1',
-  `deleted` int NOT NULL DEFAULT '0'
+  `deleted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `roleassign`;
@@ -85,8 +87,15 @@ CREATE TABLE `users` (
   `userName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `udid` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `icon` int NOT NULL DEFAULT '0',
+  `color1` int NOT NULL DEFAULT '0',
+  `color2` int NOT NULL DEFAULT '0',
+  `stars` int NOT NULL DEFAULT '0',
+  `demons` int NOT NULL DEFAULT '0',
+  `creatorPoints` int NOT NULL DEFAULT '0',
   `lastActive` int NOT NULL,
-  `IP` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1'
+  `IP` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '127.0.0.1',
+  `scoreBan` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

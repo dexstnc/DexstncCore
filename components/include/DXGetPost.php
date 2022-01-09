@@ -3,7 +3,7 @@
         public function getPost($post, $type = "-", $default = ""){
             if(isset($_POST[$post])){
                 $string = trim($_POST[$post]);
-            } elseif(!empty($default)){
+            } elseif(!empty($default) OR $default === 0){
                 $string = trim($default);
             } else return "";
 

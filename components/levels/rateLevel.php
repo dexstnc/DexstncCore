@@ -14,6 +14,8 @@
     $rating = $gp->getPost("rating", "n"); if($rating === "") exit("-1");
 
     if($_POST["secret"] === "Wmfd2893gb7"){
+        if($rating < 1 OR $rating > 5) exit("-1");
+
         $query = $db->prepare("SELECT count(*) FROM actions WHERE type = 3 AND itemID = :levelID AND IP = :ip");
         $query->execute([":levelID" => $levelID, ":ip" => $ip]);
         if($query->fetchColumn() == 0){

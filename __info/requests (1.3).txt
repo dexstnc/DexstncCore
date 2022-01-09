@@ -1,0 +1,77 @@
+Requests from version 1.3
+-------------------------
+downloadGJLevel.php • INPUT:
+    - levelID
+    - inc
+    - secret
+-------------------------
+getGJComments.php • INPUT:
+    - levelID
+    - page
+    - secret
+-------------------------
+getGJCreators.php • INPUT:
+    - udid
+    - type
+    - secret
+-------------------------
+getGJLevels.php • INPUT:
+    - type
+    - str
+    - diff
+    - len
+    - page
+    - secret
+-------------------------
+getGJScores.php • INPUT:
+    - udid
+    - type
+    - secret
+-------------------------
+likeGJItem.php • INPUT:
+    - itemID
+    - like
+    - type
+    - secret
+-------------------------
+rateGJLevel.php • INPUT:
+    - levelID
+    - rating
+    - secret
+-------------------------
+updateGJLevel.php • INPUT:
+    - levelID
+    - levelVersion
+    - gameVersion
+    - secret
+-------------------------
+updateGJUserScore.php • INPUT:
+    - udid
+    - userName
+    - stars
+    - demons
+    - icon
+    - color1
+    - color2
+    - secret
+-------------------------
+uploadGJComment.php • INPUT:
+    - udid
+    - userName
+    - levelID
+    - comment
+    - secret
+-------------------------
+uploadGJLevel.php • INPUT:
+    - udid
+    - userName
+    - levelID
+    - levelName
+    - levelDesc
+    - levelString
+    - levelVersion
+    - levelLength
+    - audioTrack
+    - gameVersion
+    - secret
+-------------------------
